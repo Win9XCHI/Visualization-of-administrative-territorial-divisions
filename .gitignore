@@ -360,3 +360,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 Handler/Handler/bin/
+Handler/Handler/obj/
