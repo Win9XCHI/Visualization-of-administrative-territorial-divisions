@@ -1,0 +1,33 @@
+﻿@model List<ForQuery1>
+@{
+    ViewBag.Title = "Map";
+}
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Information</th>
+        <th>Year_first</th>
+        <th>Year_second</th>
+        <th>Counter</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>
+                @item.Information
+            </td>
+            <td>
+                @item.Year_first
+            </td>
+            <td>
+                @item.Year_second
+            </td>
+            <td>
+                @item.Counter
+            </td>
+        </tr>
+    }
+</table>

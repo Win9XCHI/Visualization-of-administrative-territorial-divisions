@@ -14,5 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgNewtonsoft_Json Condition=" '$(PkgNewtonsoft_Json)' == '' ">C:\Users\Yehor\.nuget\packages\newtonsoft.json\10.0.1</PkgNewtonsoft_Json>
+    <PkgWebGrease Condition=" '$(PkgWebGrease)' == '' ">C:\Users\Yehor\.nuget\packages\webgrease\1.5.2</PkgWebGrease>
+    <PkgMicrosoft_SqlServer_Types Condition=" '$(PkgMicrosoft_SqlServer_Types)' == '' ">C:\Users\Yehor\.nuget\packages\microsoft.sqlserver.types\14.0.1016.290</PkgMicrosoft_SqlServer_Types>
+    <PkgjQuery Condition=" '$(PkgjQuery)' == '' ">C:\Users\Yehor\.nuget\packages\jquery\1.8.0</PkgjQuery>
   </PropertyGroup>
 </Project>

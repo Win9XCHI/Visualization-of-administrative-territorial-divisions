@@ -21,7 +21,7 @@ namespace Handler {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             string connectionString = "Data Source=DESKTOP-R19OFME;Initial Catalog=MyDB2;Integrated Security=True";
-            services.AddTransient<IUserRepository, UserRepository>(provider => new UserRepository(connectionString));
+            services.AddTransient<IDBRepository, DBRepository>(provider => new DBRepository(connectionString));
             services.AddControllersWithViews();
         }
 
@@ -42,11 +42,30 @@ namespace Handler {
 
             app.UseAuthorization();
 
+            /*app.Map("/index", Index);
+    app.Map("/about", About);
+    */
+
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        /*private static void Index(IApplicationBuilder app)
+{
+    app.Run(async context =>
+    {
+        await context.Response.WriteAsync("Index");
+    });
+}
+private static void About(IApplicationBuilder app)
+{
+    app.Run(async context =>
+    {
+        await context.Response.WriteAsync("About");
+    });
+}*/
     }
 }

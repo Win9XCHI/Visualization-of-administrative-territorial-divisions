@@ -6,21 +6,70 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Handler.Models;
+using Microsoft.SqlServer.Types;
 
 namespace Handler.Controllers {
     public class HomeController : Controller {
-        IUserRepository repo;
-        public HomeController(IUserRepository r) {
+        IDBRepository repo;
+        public HomeController(IDBRepository r) {
             repo = r;
         }
         public ActionResult Index() {
-            return View(repo.GetUsers());
+           return  View();
+        }
+
+        [HttpPost]
+        public ActionResult MapView(Query1 map)
+        {
+            string Name;
+            switch (map.Level) {
+                case 1:
+                    {
+                        Name = "Local_point";
+                        break;
+                    }
+                case 2:
+                    {
+                        Name = "Region";
+                        break;
+                    }
+                case 3:
+                    {
+                        Name = "Administrative_unit";
+                        break;
+                    }
+                case 4:
+                    {
+                        Name = "Country";
+                        break;
+                    }
+                default:
+                    {
+                        return NotFound();
+                    }
+            }
+            List<ForQuery1> ob = repo.SELECT<ForQuery1>
+                            ("ROW_NUMBER() OVER(PARTITION BY " + Name + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, " +
+                            Name + ".Name, " + Name + ".Information, Years.Year_first, Years.Year_second, " +
+                            "Сoordinates.Counter",
+                            Name + " JOIN Midle ON " + Name + ".Midle_id = Midle.id JOIN Years ON Years.Midle_id = Midle.id " +
+                            "JOIN Сoordinates ON(Сoordinates.Years_id = Years.id)",
+                            "Years.Year_first < " + map.Year + " AND (Years.Year_second > " + map.Year + " OR Years.Year_second IS NULL)");
+
+            List<SqlGeography> geo = repo.SELECT<SqlGeography>
+                            ("ROW_NUMBER() OVER(PARTITION BY " + Name + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, Сoordinates.СoordinatesPoint",
+                            Name + " JOIN Midle ON " + Name + ".Midle_id = Midle.id JOIN Years ON Years.Midle_id = Midle.id " +
+                            "JOIN Сoordinates ON(Сoordinates.Years_id = Years.id)",
+                            "Years.Year_first < " + map.Year + " AND (Years.Year_second > " + map.Year + " OR Years.Year_second IS NULL)");
+
+            for (int i = 0; i < ob.Count; i++) {
+                ob[i].СoordinatesPoint = geo[i];
+            }
+            return View(ob);
+        
         }
 
         public ActionResult Details(int id) {
-            Input user = repo.Get(id);
-            if (user != null)
-                return View(user);
             return NotFound();
         }
 
@@ -30,34 +79,25 @@ namespace Handler.Controllers {
 
         [HttpPost]
         public ActionResult Create(Input user) {
-            repo.Create(user);
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id) {
-            Input user = repo.Get(id);
-            if (user != null)
-                return View(user);
             return NotFound();
         }
 
         [HttpPost]
         public ActionResult Edit(Input user) {
-            repo.Update(user);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         [ActionName("Delete")]
         public ActionResult ConfirmDelete(int id) {
-            Input user = repo.Get(id);
-            if (user != null)
-                return View(user);
             return NotFound();
         }
         [HttpPost]
         public ActionResult Delete(int id) {
-            repo.Delete(id);
             return RedirectToAction("Index");
         }
         
