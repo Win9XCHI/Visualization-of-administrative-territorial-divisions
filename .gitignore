@@ -358,6 +358,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-Handler/Handler/bin/
-Handler/Handler/obj/
