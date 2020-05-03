@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Search";
+}
+@model FormSearch
+
+<div class="text-center">
+    <h1 class="display-4">Welcome in @ViewData["Title"]</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <form asp-action="SearchYearView" asp-controller="Search" method="POST">
+            <div>
+                <input asp-for="Name" type="text" maxlength="100" size="100" value="Enter toponym">
+                <input asp-for="Year" type="text" maxlength="4" size="40" value="Enter year">
+                <input type="submit" value="Output">
+            </div>
+        </form>
+    </div>
+
+</div>

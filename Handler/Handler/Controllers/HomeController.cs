@@ -14,12 +14,19 @@ namespace Handler.Controllers {
         public HomeController(IDBRepository r) {
             repo = r;
         }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         public ActionResult Index() {
            return  View();
         }
 
         [HttpPost]
-        public ActionResult MapView(Query1 map)
+        public ActionResult MapView(FormMap map)
         {
             string Name;
             switch (map.Level) {
@@ -48,7 +55,8 @@ namespace Handler.Controllers {
                         return NotFound();
                     }
             }
-            List<ForQuery1> ob = repo.SELECT<ForQuery1>
+
+            List<InfoMaps> ob = repo.SELECT<InfoMaps>
                             ("ROW_NUMBER() OVER(PARTITION BY " + Name + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, " +
                             Name + ".Name, " + Name + ".Information, Years.Year_first, Years.Year_second, " +
                             "Сoordinates.Counter",
@@ -66,45 +74,6 @@ namespace Handler.Controllers {
                 ob[i].СoordinatesPoint = geo[i];
             }
             return View(ob);
-        
-        }
-
-        public ActionResult Details(int id) {
-            return NotFound();
-        }
-
-        public ActionResult Create() {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(Input user) {
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult Edit(int id) {
-            return NotFound();
-        }
-
-        [HttpPost]
-        public ActionResult Edit(Input user) {
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        [ActionName("Delete")]
-        public ActionResult ConfirmDelete(int id) {
-            return NotFound();
-        }
-        [HttpPost]
-        public ActionResult Delete(int id) {
-            return RedirectToAction("Index");
-        }
-        
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

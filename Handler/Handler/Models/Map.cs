@@ -1,14 +1,13 @@
 ﻿using Microsoft.SqlServer.Types;
-using System.Collections.Generic;
 
-public class Query1
+public class FormMap
 {
     public int Year { get; set; }
     public int Level { get; set; }
     public string Exeptions { get; set; }
 }
 
-public class ForQuery1
+public class InfoMaps
 {
     public int NumberRecord { get; set; }
     public string Name { get; set; }
