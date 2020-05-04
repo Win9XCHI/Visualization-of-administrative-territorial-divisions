@@ -8,10 +8,10 @@ using Handler.Models;
 
 namespace Handler.Controllers
 {
-    public class ControlPanelController : Controller
+    public class SoursePanelController : Controller
     {
         IDBRepository repo;
-        public ControlPanelController(IDBRepository r)
+        public SoursePanelController(IDBRepository r)
         {
             repo = r;
         }

@@ -6,10 +6,10 @@
     <div class="text-center">
         <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        <a asp-controller="ControlPanel" asp-action="AddSourcesPanel">Add</a>
+        <a asp-controller="SoursePanel" asp-action="AddSourcesPanel">Add</a>
 
         <div>
-            <form asp-action="ListSources" asp-controller="ControlPanel" method="POST">
+            <form asp-action="ListSources" asp-controller="SoursePanel" method="POST">
                 <div>
                     <input asp-for="Name" type="text" maxlength="100" size="100" value="Enter name">
                     <input asp-for="Author" type="text" maxlength="100" size="100" value="Enter author">

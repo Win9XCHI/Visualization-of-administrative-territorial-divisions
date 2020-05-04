@@ -6,7 +6,7 @@
     <div class="text-center">
         <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        <a asp-controller="ControlPanel" asp-action="AddSourcesPanel">Add</a>
+        <a asp-controller="SoursePanel" asp-action="AddSourcesPanel">Add</a>
 
         <table class="table">
             <tr>
@@ -37,8 +37,8 @@
                 @item.YearRelevance
             </td>
             <td>
-                <a asp-controller="ControlPanel" asp-action="EditSourse" asp-route-id="@item.id" asp-route-name="@item.Name" asp-route-author="@item.Author" asp-route-type="@item.Type" asp-route-year1="@item.Year" asp-route-year2="@item.YearRelevance">Изменить</a> |
-                <a asp-controller="ControlPanel" asp-action="DeleteSourse" asp-route-id="@item.id">Удалить</a>
+                <a asp-controller="SoursePanel" asp-action="EditSourse" asp-route-id="@item.id" asp-route-name="@item.Name" asp-route-author="@item.Author" asp-route-type="@item.Type" asp-route-year1="@item.Year" asp-route-year2="@item.YearRelevance">Изменить</a> |
+                <a asp-controller="SoursePanel" asp-action="DeleteSourse" asp-route-id="@item.id">Удалить</a>
             </td>
         </tr>
             }

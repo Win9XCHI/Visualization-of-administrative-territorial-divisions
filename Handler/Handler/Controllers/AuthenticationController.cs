@@ -40,7 +40,7 @@ namespace Handler.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index", "ControlPanel");
+            return RedirectToAction("Index", "SoursePanel");
             //return View(User);
         }
 
