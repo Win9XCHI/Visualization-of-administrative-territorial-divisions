@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Edit sourse";
+}
+@model Sourse
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <a asp-controller="ControlPanel" asp-action="AddSourcesPanel">Add sourse</a>
+        <a asp-controller="ControlPanel" asp-action="Index">Search sourse</a>
+
+        <form asp-action="SaveEdit" asp-controller="ControlPanel" method="POST">
+            <table class="table">
+                <tr>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Тип</th>
+                    <th>Год создания</th>
+                    <th>Года актуальности</th>
+                    <th></th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input asp-for="Name" type="text" maxlength="200" size="30" value="@Model.Name">
+                    </td>
+                    <td>
+                        <input asp-for="Author" type="text" maxlength="50" size="30" value="@Model.Author">
+                        
+                    </td>
+                    <td>
+                        <input asp-for="Type" type="text" maxlength="100" size="30" value="@Model.Type">
+                    </td>
+                    <td>
+                        <input asp-for="Year" type="text" maxlength="4" size="4" value="@Model.Year">
+                    </td>
+                    <td>
+                        <input asp-for="YearRelevance" type="text" maxlength="4" size="4" value="@Model.YearRelevance">
+                    </td>
+                    <td>
+                        <input type="submit" value="Save">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>

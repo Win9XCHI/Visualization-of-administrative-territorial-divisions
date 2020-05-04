@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Authentication";
+}
+@model LogIn
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <form asp-action="Check" asp-controller="Authentication" method="POST">
+            <div>
+                <input asp-for="Login" type="text" maxlength="100" size="100" value="Enter login">
+                <input asp-for="Password" type="text" maxlength="100" size="100" value="Enter password">
+                <input type="submit" value="Output">
+            </div>
+        </form>
+    </div>
+
+</div>

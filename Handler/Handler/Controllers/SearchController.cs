@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Handler.Models;
 using System.Diagnostics;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Handler.Controllers
 {
     public class SearchController : Controller

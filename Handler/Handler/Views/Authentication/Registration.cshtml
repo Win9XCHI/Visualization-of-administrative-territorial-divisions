@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Registration";
+}
+@model Register
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <form asp-action="NewUser" asp-controller="Authentication" method="POST">
+            <div>
+                <input asp-for="PIB" type="text" maxlength="100" size="100" value="Enter PIB">
+                <input asp-for="Phone" type="text" maxlength="20" size="40" value="Enter phone">
+                <input asp-for="Login" type="text" maxlength="100" size="100" value="Enter email">
+                <input asp-for="Password" type="text" maxlength="100" size="40" value="Enter password">
+                <input asp-for="Birthday" type="text" maxlength="100" size="100" value="Enter Birthday">
+                <input asp-for="DiplomaF" type="file" class="form-control" />
+                <input type="submit" value="Output">
+            </div>
+        </form>
+    </div>
+
+</div>

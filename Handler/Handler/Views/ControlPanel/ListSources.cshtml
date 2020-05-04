@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Search sources";
+}
+@model List<Sourse>
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <a asp-controller="ControlPanel" asp-action="AddSourcesPanel">Add</a>
+
+        <table class="table">
+            <tr>
+                <th>Название</th>
+                <th>Автор</th>
+                <th>Тип</th>
+                <th>Год создания</th>
+                <th>Года актуальности</th>
+                <th></th>
+            </tr>
+
+            <!--Добавить сортировки по нажатию на колонку-->
+
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>@item.Name</td>
+            <td>
+                @item.Author
+            </td>
+            <td>
+                @item.Type
+            </td>
+            <td>
+                @item.Year
+            </td>
+            <td>
+                @item.YearRelevance
+            </td>
+            <td>
+                <a asp-controller="ControlPanel" asp-action="EditSourse" asp-route-id="@item.id" asp-route-name="@item.Name" asp-route-author="@item.Author" asp-route-type="@item.Type" asp-route-year1="@item.Year" asp-route-year2="@item.YearRelevance">Изменить</a> |
+                <a asp-controller="ControlPanel" asp-action="DeleteSourse" asp-route-id="@item.id">Удалить</a>
+            </td>
+        </tr>
+            }
+        </table>
+
+    </div>
