@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,10 +8,10 @@ using Handler.Models;
 
 namespace Handler.Controllers
 {
-    public class SoursePanelController : Controller
+    public class UserPanelController : Controller
     {
         IDBRepository repo;
-        public SoursePanelController(IDBRepository r)
+        public UserPanelController(IDBRepository r)
         {
             repo = r;
         }
@@ -22,67 +22,66 @@ namespace Handler.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpGet]
-        public ActionResult Index()
+        [HttpGet] //Index
+        public ActionResult SearchUsers()
         {
-
             return View();
         }
 
         [HttpPost]
-        public ActionResult ListSources(Sourse SourseOb)
+        public ActionResult ListUsers(User U)
         {
             string where = "";
 
-            if (SourseOb.Name != null)
+            if (U.PIB != null)
             {
-                where += "Name = '" + SourseOb.Name +"'";
+                where += "PIB = '" + U.PIB + "'";
             }
 
-            if (SourseOb.Author != null)
-            {
-                if (where.Length > 0)
-                {
-                    where += " AND ";
-                }
-
-                where += "Author = '" + SourseOb.Author + "'";
-            }
-
-            if (SourseOb.Type != null) {
-                if (where.Length > 0)
-                {
-                    where += " AND ";
-                }
-
-                where += "Type = '" + SourseOb.Type + "'";
-            }
-
-            if (SourseOb.Year != 0)
+            if (U.Phone != null)
             {
                 if (where.Length > 0)
                 {
                     where += " AND ";
                 }
 
-                where += "YearCreate = '" + SourseOb.Year + "'";
+                where += "Phone = '" + U.Phone + "'";
             }
 
-            if (SourseOb.YearRelevance != null)
+            if (U.Login != null)
             {
                 if (where.Length > 0)
                 {
                     where += " AND ";
                 }
 
-                where += "CAST(SUBSTRING('1900-2000', 1, 4) AS INT) < " + SourseOb.YearRelevance + " AND CAST(SUBSTRING('1900-2000', 6, 9) AS INT) > " + SourseOb.YearRelevance;
+                where += "Login = '" + U.Login + "'";
             }
 
-            return View(repo.SELECT<Sourse>("idSourse AS id, Name, Type, Author, YearCreate AS Year, YearRelevance", "Sourse", where));
+            if (U.Birthday != null)
+            {
+                if (where.Length > 0)
+                {
+                    where += " AND ";
+                }
+
+                where += "Birthday = '" + U.Birthday + "'";
+            }
+
+            if (U.Rights != null)
+            {
+                if (where.Length > 0)
+                {
+                    where += " AND ";
+                }
+                where += "Rights = '" + U.Rights + "'";
+            }
+
+            return View(repo.SELECT<Sourse>("*", "Input", where));
         }
 
         [HttpGet]
-        public ActionResult DeleteSourse(int id)
+        public ActionResult DeleteUser(int code)
         {
             List<int> M_IDs = repo.SELECT<int>("Local_point.Midle_id",
                 "Local_point JOIN Sourse_LocalPoint ON (Local_point.idLP = Sourse_LocalPoint.Local_point_idLP) " +
@@ -93,31 +92,32 @@ namespace Handler.Controllers
 "JOIN Sourse ON(Sourse.idSourse = Sourse_Administrative_unit.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
 "UNION SELECT Country.Midle_id FROM Country JOIN Sourse_Country ON(Country.idC = Sourse_Country.Country_idC) " +
 "JOIN Sourse ON(Sourse.idSourse = Sourse_Country.Sourse_idSourse)",
-                "Sourse.idSourse = " + id);
+                "Sourse.Input_Code = " + code);
 
             for (int i = 0; i < M_IDs.Count; i++)
             {
                 repo.DELETE("Midle", "id = " + M_IDs[i]);
             }
-            repo.DELETE("Sourse", "idSourse = " + id);
+
+            repo.DELETE("Input", "Code = " + code);
 
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public ActionResult EditSourse(int id, string name, string author, string type, string year1, string year2)
+        public ActionResult EditSourse(int code, string pib, string phone, string birthday, string login, string rights)
         {
-            Sourse ObS = new Sourse { id = id, Name = name, Author = author, Type = type, Year = System.Int32.Parse(year1), YearRelevance = year2};
-            return View(ObS);
+            User ObU = new User { Code = code, PIB = pib, Phone = phone, Birthday = birthday, Login = login, Rights = rights };
+            return View(ObU);
         }
 
         [HttpPost]
-        public ActionResult SaveEdit(Sourse ObS)
+        public ActionResult SaveEdit(User ObU)
         {
-            repo.UPDATE("Sourse", 
-                "Name = '" + ObS.Name + "', Author = '" + ObS.Author + "', Type = '" + ObS.Type + "', YearCreate = '" + ObS.Year + "', YearRelevance = '" + ObS.YearRelevance + "'", 
-                "idSourse = " + ObS.id);
-            return RedirectToAction("Index");
+            repo.UPDATE("Input",
+                "PIB = '" + ObU.PIB + "', Phone = '" + ObU.Phone + "', Birthday = '" + ObU.Birthday + "', Login = '" + ObU.Login + "', Rights = '" + ObU.Rights + "'",
+                "Code = " + ObU.Code);
+            return RedirectToAction("SearchUsers");
         }
     }
 }

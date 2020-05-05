@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Search sources";
+}
+@model List<User>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <table class="table">
+        <tr>
+            <th>Диплом</th>
+            <th>ФИО</th>
+            <th>Логин</th>
+            <th>Телефон</th>
+            <th>День рождения</th>
+            <th>Права</th>
+            <th></th>
+        </tr>
+
+        <!--Добавить сортировки по нажатию на колонку-->
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @if (item.Diploma != null)
+            {
+                <img style='width:80px; height:60px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Diploma))" />
+            }
+        </td>
+        <td>
+            @item.PIB
+        </td>
+        <td>
+            @item.Login
+        </td>
+        <td>
+            @item.Phone
+        </td>
+        <td>
+            @item.Birthday
+        </td>
+        <td>
+            @item.Rights
+        </td>
+        <td>
+            <a asp-controller="UserPanel" asp-action="EditUser" asp-route-code="@item.Code" asp-route-pib="@item.PIB" asp-route-login="@item.Login" asp-route-phone="@item.Phone" asp-route-birthday="@item.Birthday" asp-route-rights="@item.Rights">Изменить</a> |
+            <a asp-controller="UserPanel" asp-action="DeleteUser" asp-route-code="@item.Code">Удалить</a>
+        </td>
+    </tr>
+        }
+    </table>
+
+</div>

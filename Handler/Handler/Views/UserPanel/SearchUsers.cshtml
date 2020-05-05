@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Search users";
+}
+@model User
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <!--Добавить отношение ИЛИ-->
+    <div>
+        <form asp-action="ListUsers" asp-controller="UserPanel" method="POST">
+            <div>
+                <input asp-for="PIB" type="text" maxlength="100" size="40" value="Enter PIB">
+                <input asp-for="Phone" type="text" maxlength="20" size="20" value="Enter phone">
+                <input asp-for="Rights" type="text" maxlength="30" size="30" value="Enter year rights">
+                <input asp-for="Login" type="text" maxlength="100" size="40" value="Enter year login">
+                <input asp-for="Birthday" type="text" maxlength="10" size="10" value="Enter Birthday">
+                <input type="submit" value="Output">
+            </div>
+        </form>
+    </div>
+
+</div>
