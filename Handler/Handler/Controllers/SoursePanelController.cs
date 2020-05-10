@@ -1,10 +1,11 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Handler.Models;
+using Handler.Algorithms;
 
 namespace Handler.Controllers
 {
@@ -119,5 +120,21 @@ namespace Handler.Controllers
                 "idSourse = " + ObS.id);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult AddSourse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> NewSourseAsync(Sourse ObS)
+        {
+            SourseAnalysis Analysis = new SourseAnalysis(repo, ObS);
+            await Task.Run(() => Analysis.Start());
+
+            return View();
+        }
+
     }
 }
