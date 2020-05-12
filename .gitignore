@@ -361,3 +361,9 @@ FodyWeavers.xsd
 
 Handler/Handler/bin/
 Handler/Handler/obj/ 
+*.vc
+*.csproj
+*.pdb
+*.cache
+*.txt
+*.g

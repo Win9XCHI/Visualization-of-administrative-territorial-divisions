@@ -3,6 +3,7 @@ using Handler.Models.Repositories.Interfaces;
 using Handler.Models.SoursePanel;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 namespace Handler.Models.Repositories {
     public class SoursePanelRepository : DBRepository, ISoursePanelRepository
@@ -97,9 +98,9 @@ namespace Handler.Models.Repositories {
             return SELECT<int>("idSourse", "Sourse", "Name = " + ObS.Name)[0];
         }
 
-        public void AddNewError(string str)
-        {//Add time and pib
-            INSERT("ErrorSourse", new ArrayList { "ErrorString" }, new ArrayList { str }); 
+        public void AddNewError(string str, int id)
+        {
+            INSERT("ErrorSourse", new ArrayList { "ErrorString", "Time", "Sourse_idSourse" }, new ArrayList { str, DateTime.Now, id }); 
         }
 
         public bool CheckNameObject(string Name)
@@ -150,7 +151,7 @@ namespace Handler.Models.Repositories {
                 InsertText(GFeature.Text, idDI, id);
             }
 
-            InsertReference(GFeature, SELECT<int>("id", GFeature.Type, "Midle_id = " + Midle_id)[0], number);
+            InsertReference(GFeature, SELECT<int>("id", GFeature.Type, "Midle_id = " + Midle_id)[0], number, id);
         }
         public void OldObject(ClassGeographicFeature GFeature, ReturnOb CheckName, int number, int id)
         {
@@ -205,7 +206,7 @@ namespace Handler.Models.Repositories {
                 }
             }
 
-            InsertReference(GFeature, CheckName.id, number);
+            InsertReference(GFeature, CheckName.id, number, id);
         }
 
         private void InsertText(string Text, int idDI, int id)
@@ -213,7 +214,7 @@ namespace Handler.Models.Repositories {
             INSERT("Part", new ArrayList { "Information", "DetailsInformation_id", "Sourse_idSourse" },
                 new ArrayList { Text, idDI, id });
         }
-        private void InsertReference(ClassGeographicFeature GFeature, int idOB, int number)
+        private void InsertReference(ClassGeographicFeature GFeature, int idOB, int number, int idS)
         {
             if (GFeature.Reference.Count != 0)
             {
@@ -280,7 +281,7 @@ namespace Handler.Models.Repositories {
                     }
                     else
                     {
-                        AddNewError("Not reference for " + GFeature.Name + " and " + GFeature.Reference[i] + "; Line #" + number);
+                        AddNewError("Not reference for " + GFeature.Name + " and " + GFeature.Reference[i] + "; Line #" + number, idS);
                     }
                 }
             }

@@ -47,7 +47,7 @@ namespace Handler.Algorithms
             GFeature.SetForGeo(str);
             
             if (!GFeature.CheckCompleteness()) {
-                repo.AddNewError("Not completeness data; Line #" + number);
+                repo.AddNewError("Not completeness data; Line #" + number, ObS.id);
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace Handler.Algorithms
 
             if (!GFeature.CheckCompleteness())
             {
-                repo.AddNewError("Not completeness data; Line #" + number);
+                repo.AddNewError("Not completeness data; Line #" + number, ObS.id);
                 return;
             }
 

@@ -9,7 +9,7 @@ namespace Handler.Models.Repositories.Interfaces
         void DeleteSourse(int id);
         void UpdateSourse(Sourse ObS);
         int AddNewSourse(Sourse ObS);
-        void AddNewError(string str);
+        void AddNewError(string str, int id);
         bool CheckNameObject(string Name);
         ReturnOb GetObject(string Name);
         void NewObject(ClassGeographicFeature GFeature, int number, int id);
