@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Handler.Models;
+using Handler.Models.Repositories;
+using Handler.Models.Repositories.Interfaces;
 
 namespace Handler {
     public class Startup {
@@ -21,7 +17,11 @@ namespace Handler {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             string connectionString = "Data Source=DESKTOP-R19OFME;Initial Catalog=MyDB2;Integrated Security=True";
-            services.AddTransient<IDBRepository, DBRepository>(provider => new DBRepository(connectionString));
+            services.AddTransient<IAuthenticationRepository, AuthenticationRepository>(provider => new AuthenticationRepository(connectionString));
+            services.AddTransient<IHome_mapRepository, Home_mapRepository>(provider => new Home_mapRepository(connectionString));
+            services.AddTransient<ISearchRepository, SearchRepository>(provider => new SearchRepository(connectionString));
+            services.AddTransient<IUserPanelRepository, UserPanelRepository>(provider => new UserPanelRepository(connectionString));
+            services.AddTransient<ISoursePanelRepository, SoursePanelRepository>(provider => new SoursePanelRepository(connectionString));
             services.AddControllersWithViews();
         }
 
