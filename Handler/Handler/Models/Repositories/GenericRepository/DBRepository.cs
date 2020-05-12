@@ -5,17 +5,18 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Collections;
 
-namespace Handler.Models {
+namespace Handler.Models.Repositories.GenericRepository
+{
 
-    public class DBRepository : IDBRepository
+    public abstract class DBRepository// : IDBRepository
     {
-        string connectionString = null;
+        protected string connectionString = null;
 
         public DBRepository(string conn)
         {
             connectionString = conn;
         }
-        public void INSERT(string table_name, ArrayList listColumns, ArrayList listValue)
+        protected void INSERT(string table_name, ArrayList listColumns, ArrayList listValue)
         {
             if (table_name.Length != 0 && listColumns.Count != 0 && listColumns.Count == listValue.Count)
             {
@@ -52,7 +53,7 @@ namespace Handler.Models {
                 db.Execute("INSERT INTO " + table_name + " (" + listColumns + ") VALUES (" + listValue + ");");
             }
         }
-        public void UPDATE(string table_name, string value, string definition = "")
+        protected void UPDATE(string table_name, string value, string definition = "")
         {
             if (table_name.Length != 0 && value.Length != 0)
             {
@@ -68,7 +69,7 @@ namespace Handler.Models {
                 }
             }
         }
-        public List<T> SELECT<T>(string columns, string table_name, string definition = "", string Group_by = "", string Order_by = "", string Having = "")
+        protected List<T> SELECT<T>(string columns, string table_name, string definition = "", string Group_by = "", string Order_by = "", string Having = "")
         {
             if (table_name.Length == 0 || columns.Length == 0)
             {
@@ -77,7 +78,6 @@ namespace Handler.Models {
 
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                //
                 string str = "SELECT " + columns + " FROM " + table_name;
 
                 if (definition.Length != 0) {
@@ -103,7 +103,7 @@ namespace Handler.Models {
                 return db.Query<T>(str).ToList();
             }
         }
-        public void DELETE(string table_name, string definition = "")
+        protected void DELETE(string table_name, string definition = "")
         {
             if (table_name.Length != 0)
             {

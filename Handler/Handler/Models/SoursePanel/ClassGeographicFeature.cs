@@ -1,42 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 
-namespace Handler.Models
+namespace Handler.Models.SoursePanel
 {
-    public class Sourse
-    {
-        public int id { get; set; }
-        public string Name { get; set; }
-        public string Author { get; set; }
-        public int Year { get; set; }
-        public string YearRelevance { get; set; }
-        public string Type { get; set; }
-        public string Language { get; set; }
-        public byte[] DOC { get; set; }
-        public IFormFile DOCF { get; set; }
-
-        public void ConvertToByte()
-        {
-            if (DOCF != null)
-            {
-                byte[] Data = null;
-                using (var binaryReader = new BinaryReader(DOCF.OpenReadStream()))
-                {
-                    Data = binaryReader.ReadBytes((int)DOCF.Length);
-                }
-                DOC = Data;
-            }
-        }
-    }
-
-    public class ReturnOb
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int id { get; set; }
-    }
-
     public class ClassGeographicFeature
     {
         public string Name { get; set; }

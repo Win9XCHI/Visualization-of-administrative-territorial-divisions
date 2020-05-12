@@ -1,13 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Handler.Models
+namespace Handler.Models.Search
 {
-    public class FormSearch
-    {
-        public int Year { get; set; }
-        public string Name { get; set; }
-    }
-
     public class ResponseSearch
     {
         public string Name { get; set; }
@@ -17,17 +11,5 @@ namespace Handler.Models
         public List<Reference> ReferenceIn { get; set; }
         public List<Reference> ReferenceOut { get; set; }
         public List<RecordTableSearch> ListRecords { get; set; }
-    }
-
-    public class Reference
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class RecordTableSearch
-    {
-        public int Year { get; set; }
-        public string InformationYear { get; set; }
     }
 }

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Handler.Models;
+using Handler.Models.Map;
+using Handler.Models.Repositories.Interfaces;
 using Microsoft.SqlServer.Types;
 
 namespace Handler.Controllers {
     public class HomeController : Controller {
-        IDBRepository repo;
-        public HomeController(IDBRepository r) {
+        IHome_mapRepository repo;
+        public HomeController(IHome_mapRepository r) {
             repo = r;
         }
 
@@ -57,19 +55,8 @@ namespace Handler.Controllers {
                     }
             }
 
-            List<InfoMaps> ob = repo.SELECT<InfoMaps>
-                            ("ROW_NUMBER() OVER(PARTITION BY " + Name + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, " +
-                            Name + ".Name, " + Name + ".Information, Years.Year_first, Years.Year_second, " +
-                            "Сoordinates.Counter",
-                            Name + " JOIN Midle ON " + Name + ".Midle_id = Midle.id JOIN Years ON Years.Midle_id = Midle.id " +
-                            "JOIN Сoordinates ON(Сoordinates.Years_id = Years.id)",
-                            "Years.Year_first < " + map.Year + " AND (Years.Year_second > " + map.Year + " OR Years.Year_second IS NULL)");
-
-            List<SqlGeography> geo = repo.SELECT<SqlGeography>
-                            ("ROW_NUMBER() OVER(PARTITION BY " + Name + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, Сoordinates.СoordinatesPoint",
-                            Name + " JOIN Midle ON " + Name + ".Midle_id = Midle.id JOIN Years ON Years.Midle_id = Midle.id " +
-                            "JOIN Сoordinates ON(Сoordinates.Years_id = Years.id)",
-                            "Years.Year_first < " + map.Year + " AND (Years.Year_second > " + map.Year + " OR Years.Year_second IS NULL)");
+            List<InfoMaps> ob = repo.GetInformation(Name, map.Year.ToString());
+            List<SqlGeography> geo = repo.GetCoordinates(Name, map.Year.ToString());
 
             for (int i = 0; i < ob.Count; i++) {
                 ob[i].СoordinatesPoint = geo[i];
