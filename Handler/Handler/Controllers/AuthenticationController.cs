@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Handler.Models;
 using Handler.Models.Authentication;
 using Handler.Models.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Handler.Controllers
 {
@@ -32,6 +33,7 @@ namespace Handler.Controllers
             try
             {
                 User = repo.GetUser(User);
+                Response.Cookies.Append("code", User.Code.ToString());
             }
             catch (System.ArgumentOutOfRangeException)
             {
