@@ -9,7 +9,7 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  /*color: #0366d6;*/
 }
 
 .btn-primary {
@@ -68,4 +68,45 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.view { /*~/images/1655р.САНСОН.jpg*/
+    background-image: url('https://1.bp.blogspot.com/-jVRT1Oc6DDM/XUO1iYNcT5I/AAAAAAAAOqw/iHwpi77Ikkki8dG85TjNSyOSLtOPJvBgwCLcBGAs/s1600/1655%2B%25D1%2580.%2B%25D0%25A1%25D0%2590%25D0%259D%25D0%25A1%25D0%259E%25D0%259D.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 600px;
+}
+
+h1 {
+    letter-spacing: 8px;
+}
+
+h5 {
+    letter-spacing: 3px;
+}
+
+.hr-light {
+    border-top: 3px solid #fff;
+    width: 80px;
+}
+
+.white-text {
+    color: #fff;
+}
+
+.btn-outline-white {
+    color: #fff;
+    border-color: #fff;
+}
+
+    .btn-outline-white:hover {
+        color: #ff0000;
+    }
+
+.map-container {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
 }
