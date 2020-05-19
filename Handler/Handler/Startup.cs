@@ -16,9 +16,9 @@ namespace Handler {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            string connectionString = "Data Source=DESKTOP-R19OFME;Initial Catalog=MyDB2;Integrated Security=True";
+            string connectionString = "Data Source=DESKTOP-R19OFME;Initial Catalog=Geographic_Feature_Database;Integrated Security=True";
             services.AddTransient<IAuthenticationRepository, AuthenticationRepository>(provider => new AuthenticationRepository(connectionString));
-            services.AddTransient<IHome_mapRepository, Home_mapRepository>(provider => new Home_mapRepository(connectionString));
+            services.AddTransient<IVisualizationRepository, VisualizationRepository>(provider => new VisualizationRepository(connectionString));
             services.AddTransient<ISearchRepository, SearchRepository>(provider => new SearchRepository(connectionString));
             services.AddTransient<IUserPanelRepository, UserPanelRepository>(provider => new UserPanelRepository(connectionString));
             services.AddTransient<ISoursePanelRepository, SoursePanelRepository>(provider => new SoursePanelRepository(connectionString));
