@@ -74,10 +74,11 @@ namespace Handler.Models.Repositories {
 
             for (int i = 0; i < M_IDs.Count; i++)
             {
+                DELETE("Region", "Midle_id = " + M_IDs[i]);
+                DELETE("Local_point", "Midle_id = " + M_IDs[i]);
+                DELETE("Administrative_unit", "Midle_id = " + M_IDs[i]);
                 DELETE("Midle", "id = " + M_IDs[i]);
             }
-
-            DELETE("Sourse", "Input_Code = " + code);
 
             DELETE("Input", "Code = " + code);
         }

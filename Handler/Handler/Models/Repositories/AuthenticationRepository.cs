@@ -10,7 +10,7 @@ namespace Handler.Models.Repositories {
 
         public LogIn GetUser(LogIn User)
         {
-            return SELECT<LogIn>("PIB, Rights", "Input", "Login = '" + User.Login + "' AND Password = '" + User.Password + "'")[0];
+            return SELECT<LogIn>("Code, PIB, Rights", "Input", "Login = '" + User.Login + "' AND Password = '" + User.Password + "'")[0];
         }
 
         public void AddUser(Register User)

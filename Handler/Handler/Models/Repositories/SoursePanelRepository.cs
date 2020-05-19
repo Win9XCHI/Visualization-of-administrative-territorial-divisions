@@ -73,10 +73,13 @@ namespace Handler.Models.Repositories {
 "JOIN Sourse ON(Sourse.idSourse = Sourse_Administrative_unit.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
 "UNION SELECT Country.Midle_id FROM Country JOIN Sourse_Country ON(Country.idC = Sourse_Country.Country_idC) " +
 "JOIN Sourse ON(Sourse.idSourse = Sourse_Country.Sourse_idSourse)",
-                "Sourse.idSourse = " + id);
+                "Sourse.idSourse = " + id); 
 
             for (int i = 0; i < M_IDs.Count; i++)
             {
+                DELETE("Region", "Midle_id = " + M_IDs[i]);
+                DELETE("Local_point", "Midle_id = " + M_IDs[i]);
+                DELETE("Administrative_unit", "Midle_id = " + M_IDs[i]);
                 DELETE("Midle", "id = " + M_IDs[i]);
             }
 
