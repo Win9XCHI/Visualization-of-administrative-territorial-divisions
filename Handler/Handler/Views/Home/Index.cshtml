@@ -1,21 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model Handler.Models.Map.FormMap
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
-    <div>
-        <form asp-action="MapView" asp-controller="Home" method="POST">
-            <div>
-                <input asp-for="Year" type="text" maxlength="4" size="40" value="1250">
-                <input asp-for="Level" type="range" min="0" max="4" step="1" value="2">
-                <input asp-for="Exeptions" type="text" maxlength="100" size="100" value="Enter Exceptions">
-                <input type="submit" value="Output">
+<div class="view">
+    <div class="mask rgba-black-light align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-4 white-text text-center">
+                    <h1 class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5"><strong>Minimalist intro</strong></h1>
+                    <hr class="hr-light my-4">
+                    <h5 class="text-uppercase mb-4 white-text"><strong>Photography & design</strong></h5>
+                    <a class="btn btn-outline-white" asp-controller="Visualization" asp-action="Index">Спробувати</a>
+                    <a class="btn btn-outline-white" asp-controller="Home" asp-action="About">Про проект</a>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-
 </div>

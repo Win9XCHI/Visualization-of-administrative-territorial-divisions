@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Visualization";
+}
+
+<div class="row">
+    <div id="map" class="z-depth-1-half map-container col-12 col-lg-9" style="height: 100%">
+    </div>
+
+    <div class="text-center col-12 col-lg-3">
+        <div class="form-group">
+            <label for="InputYear1">Year</label>
+            <input type="text" class="form-control" id="InputYear1" aria-describedby="yearHelp" maxlength="5">
+        </div>
+        <div class="form-group">
+            <label for="formControlRange">Level</label>
+            <input type="range" class="form-control-range" id="formControlRange" min="0" max="4" value="0">
+
+            <datalist id="formControlRange">
+                <option value="0"></option>
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+            </datalist>
+            <span id="ex6CurrentSliderValLabel">Current Slider Value: <span id="ex6SliderVal"></span></span>
+            <small id="ControlRangeHelp" class="form-text text-muted">0 - all, 1 - local points, 2 - regions, 3 - administrative unit, 4 - countries</small>
+        </div>
+        <div class="form-group">
+            <label for="InputExeptions1">Exeptions</label>
+            <input type="text" class="form-control" id="InputExeptions1">
+            <small id="ExeptionsHelp" class="form-text text-muted">Name objects through ";"</small>
+        </div>
+        <button type="submit" class="btn btn-primary" id="Output">Output</button>
+
+    </div>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Please wait</h5>
+            </div>
+            <div class="modal-body">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Загрузка...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYnxQlUA6bBNupyd0bsT253iPnpWckpSg&callback=initMap"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="~/js/ClassGeographicFeature.js" asp-append-version="true"></script>
+<script src="~/js/ClassMap.js" asp-append-version="true"></script>
+<script src="~/js/Map.js" asp-append-version="true"></script>
