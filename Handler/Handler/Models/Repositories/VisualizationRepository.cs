@@ -49,11 +49,11 @@ namespace Handler.Models.Repositories {
             else
             {
                 for (int i = 0; i < Names.Length; i++) {
-                    ReturnList.Union(SELECT<InfoMaps>("ROW_NUMBER() OVER(PARTITION BY " + Names[i] + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, " +
+                    ReturnList.AddRange(SELECT<InfoMaps>("ROW_NUMBER() OVER(PARTITION BY " + Names[i] + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, " +
                             Names[i] + ".Name, " + Names[i] + ".Information, DetailsInformation.Year, Сoordinates.Counter, Сoordinates.СoordinatesPoint.Lat AS Lat, Сoordinates.СoordinatesPoint.Long AS Long",
                             Names[i] + " JOIN Midle ON " + Names[i] + ".Midle_id = Midle.id JOIN DetailsInformation ON DetailsInformation.Midle_id = Midle.id " +
                             "JOIN Сoordinates ON(Сoordinates.DetailsInformation_id = DetailsInformation.id)",
-                            "DetailsInformation.Year = " + Year + Exceptions(Name, ListExceptions)));
+                            "DetailsInformation.Year = " + Year + Exceptions(Names[i], ListExceptions)));
                 }
             }
 

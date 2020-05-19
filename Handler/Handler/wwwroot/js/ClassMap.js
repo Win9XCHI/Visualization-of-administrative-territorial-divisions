@@ -8,7 +8,7 @@
     this.ArrayGeographicFeature = [];
     this.Palette = [];
     this.Triangles = [];
-    this.InfoWindow;
+    this.Markers = [];
 };
 
 GoogleMap.prototype.GetOptions = function () {
@@ -19,7 +19,30 @@ GoogleMap.prototype.SetMap = function (Gm) {
     this.map = Gm;
 };
 
+GoogleMap.prototype.SetObject = function (color, triangleCoords) {
+
+    if (triangleCoords.length > 2) {
+        this.SetPoligon(color, triangleCoords);
+
+    } else {
+        this.SetMarker(color, triangleCoords);
+    }
+};
+
+GoogleMap.prototype.SetMarker = function (color, triangleCoords) {
+    let Marker = new google.maps.Marker({
+        position: triangleCoords[0],
+        map: map
+    });
+
+    Marker.setMap(this.map);
+    this.Markers.push(Marker);
+    this.ArrayGeographicFeature[this.ArrayGeographicFeature.length - 1].SetTriangle(Marker);
+    Marker.addListener('click', showMarker);
+};
+
 GoogleMap.prototype.SetPoligon = function (color, triangleCoords) {
+
     let Triangle = new google.maps.Polygon({
         paths: triangleCoords,
         strokeColor: color,
@@ -31,37 +54,37 @@ GoogleMap.prototype.SetPoligon = function (color, triangleCoords) {
 
     Triangle.setMap(this.map);
     this.Triangles.push(Triangle);
+
     this.ArrayGeographicFeature[this.ArrayGeographicFeature.length - 1].SetTriangle(Triangle);
 
-    Triangle.addListener('click', GoogleMap.showMarker);
+    Triangle.addListener('click', showMarker);
 
-    this.infoWindow = new google.maps.InfoWindow;
-};
-
-GoogleMap.prototype.showMarker = function (event) {
-    var vertices = this.getPath();
-
-    var contentString = '<b>Bermuda Triangle polygon</b><br>' +
-        'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
-        '<br>';
-
-    for (var i = 0; i < vertices.getLength(); i++) {
-        var xy = vertices.getAt(i);
-        contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
-            xy.lng();
-    }
-
-    infoWindow.setContent(contentString);
-    infoWindow.setPosition(event.latLng);
-
-    infoWindow.open(map);
 };
 
 GoogleMap.prototype.Clear = function () {
 
+    this.ArrayGeographicFeature = [];
+    this.Palette = [];
 
+    for (let i = 0; i < this.Triangles.length; i++) {
+        this.Triangles[i].setMap(null);
+    }
+    for (let i = 0; i < this.Markers.length; i++) {
+        this.Markers[i].setMap(null);
+    }
+
+    this.Markers = [];
+    this.Triangles = [];
 };
 
 GoogleMap.prototype.AddGF = function (GF) {
     this.ArrayGeographicFeature.push(GF);
+}
+
+GoogleMap.prototype.GetPalette = function () {
+    return this.Palette;
+};
+
+GoogleMap.prototype.AddColor = function (color) {
+    this.Palette.push(color);
 }

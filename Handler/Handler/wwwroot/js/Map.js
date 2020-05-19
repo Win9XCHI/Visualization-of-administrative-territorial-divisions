@@ -1,14 +1,18 @@
 ﻿var GM;
 function initMap() {
+//function initialize() {
     GM = new GoogleMap();
     GM.SetMap(new google.maps.Map(document.getElementById("map"), GM.GetOptions()));
 }
+
+//google.maps.event.addDomListener(window, "load", initialize);
 
 $("#formControlRange").on("slide", function (slideEvt) {
     $("#ex6SliderVal").text(slideEvt.value);
 });
 
 $("#Output").on("click", function () {
+    GM.Clear();
 
     if (isNaN($("#InputYear1").val())) {
         return;
@@ -62,102 +66,41 @@ function CreateObject(data, i) {
     for (let n = i; n < data.length; n++) {
 
         if (data[n].NumberRecord == 1 && n != i) {
+            triangleCoords.push({ lat: parseFloat(data[n - 1].Lat.replace(',', '.')), lng: parseFloat(data[n - 1].Long.replace(',', '.')) });
+            GM.AddGF(GF);
+            GM.SetObject(NewColor(), triangleCoords);
             return n - 1;
         }
 
-        triangleCoords.push({ lat: data[i].Lat, lng: data[i].Long });
+        triangleCoords.push({ lat: parseFloat(data[n].Lat.replace(',', '.')), lng: parseFloat(data[n].Long.replace(',', '.')) });
     }
 
     GM.AddGF(GF);
-    GM.SetPoligon(NewColor(), triangleCoords);
+    GM.SetObject(NewColor(), triangleCoords);
+
+    return data.length - 1;
 }
 
-function NewColor() {
+function RandomColor() {
     let letters = '0123456789ABCDEF';
-    let color = '#';
-
-    while (Palette.find(function (element) {
-        return element === color;
-    }).length != 0 && color == '#') {
-
-        color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
+    color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
     }
-
-    Palette.push(color);
 
     return color;
 }
 
-/*
- * Year: $("#InputYear1").val(),
-            Level: $("#formControlRange").val(),
-            Exeption: $("#InputExeptions1").val()
+function NewColor() {
+    
+    let color = RandomColor();
 
- * function initialize() {
-           var mapOptions = {
-               zoom: 6,
-               center: new google.maps.LatLng(48.45, 35.02)
-           };
+    while (GM.GetPalette().indexOf(color) != -1) {
 
-           map = new google.maps.Map(document.getElementById("map"), mapOptions);
-       } //Намалювати мапу
+            color = RandomColor();
+    }
 
-       google.maps.event.addDomListener(window, "load", initialize);
+    GM.AddColor(color);
 
-       function SetMarker(location, title, MarkerCounter) {
-
-           if (MarkerCounter == 1) {
-               marker1 = new google.maps.Marker({
-                   position: location, //new google.maps.LatLng(locations[i][1], locations[i][2]),
-                   map: map,
-                   title: title
-               });
-           }
-
-           if (MarkerCounter == 2) {
-               marker2 = new google.maps.Marker({
-                   position: location, //new google.maps.LatLng(locations[i][1], locations[i][2]),
-                   map: map,
-                   title: title
-               });
-           }
-
-           if (MarkerCounter == 3) {
-               marker3 = new google.maps.Marker({
-                   position: location, //new google.maps.LatLng(locations[i][1], locations[i][2]),
-                   map: map,
-                   title: title
-               });
-           }
-           Mark++;
-
-       } //Поставити маркер
-
-       function SetLine(flightPlanCoordinates) {
-           flightPath = new google.maps.Polyline({
-               path: flightPlanCoordinates,
-               geodesic: true,
-               strokeColor: '#FF0000',
-               strokeOpacity: 1.0,
-               strokeWeight: 2
-           });
-           flightPath.setMap(map);
-           flagLine = true;
-       } //Відмалювати криву
-
-       function ClearMarkerAndLine() {
-           if (flagLine) {
-               marker1.setMap(null);
-               marker2.setMap(null);
-               if (Mark > 2) {
-                   marker3.setMap(null);
-               }
-               flightPath.setMap(null);
-               flagLine = false;
-               Mark = 0;
-           }
-       } //Прибрати маркери та криву
-       */
+    return color;
+}
