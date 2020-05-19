@@ -50,10 +50,11 @@ namespace Handler.Controllers {
                         Name = "Country";
                         break;
                     }
-                /*default:
+                default:
                     {
-                        return NotFound();
-                    }*/
+                        Name = "Local_point,Region,Administrative_unit,Country";
+                        break;
+                    }
             }
 
             string[] ex = { };
@@ -64,12 +65,6 @@ namespace Handler.Controllers {
             }
 
             List<InfoMaps> ob = repo.GetInformation(Name, map.Year.ToString(), ex);
-            /*List<SqlGeography> geo = repo.GetCoordinates(Name, map.Year.ToString(), ex);
-
-            for (int i = 0; i < ob.Count; i++) {
-                ob[i].Lat = geo[i].Lat.ToString();
-                ob[i].Lon = geo[i].Long.ToString();
-            }*/
 
             return Json(JsonSerializer.Serialize(ob));
         }
