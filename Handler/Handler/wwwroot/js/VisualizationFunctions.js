@@ -1,41 +1,6 @@
-﻿var GM;
-function initMap() {
-//function initialize() {
-    GM = new GoogleMap();
-    GM.SetMap(new google.maps.Map(document.getElementById("map"), GM.GetOptions()));
-}
-
-//google.maps.event.addDomListener(window, "load", initialize);
-
-$("#formControlRange").on("slide", function (slideEvt) {
+﻿/*$("#formControlRange").on("slide", function (slideEvt) {
     $("#ex6SliderVal").text(slideEvt.value);
-});
-
-$("#Output").on("click", function () {
-    GM.Clear();
-
-    if (isNaN($("#InputYear1").val())) {
-        return;
-    }
-
-    let FormMap = {
-        Year: $("#InputYear1").val(),
-        Level: $("#formControlRange").val(),
-        Exeptions: $("#InputExeptions1").val()
-    }
-
-    $.ajax({
-        url: "Visualization/MapView",
-        type: "POST",
-        dataType: "json",
-        cache: false,
-        data: ({
-            map: FormMap
-        }),
-        beforeSend: Download,
-        success: Show
-    });
-});
+});*/
 
 function Download() {
 

@@ -88,3 +88,13 @@ GoogleMap.prototype.GetPalette = function () {
 GoogleMap.prototype.AddColor = function (color) {
     this.Palette.push(color);
 }
+
+//callback map
+var GM;
+function initMap() {
+    //function initialize() {
+    GM = new GoogleMap();
+    GM.SetMap(new google.maps.Map(document.getElementById("map"), GM.GetOptions()));
+}
+
+//google.maps.event.addDomListener(window, "load", initialize);

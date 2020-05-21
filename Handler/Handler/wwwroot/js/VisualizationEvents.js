@@ -6,7 +6,7 @@
             stringContent = '<div>' +
                 '<p class="text-center">' + GM.ArrayGeographicFeature[i].GetName() + '</p>' +
                 '<p class="text-center">' + GM.ArrayGeographicFeature[i].GetInformation() + '</p>' +
-                '<a href="https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple" asp-area="" asp-controller="Search" asp-action="Index">Детально</a>' +
+                '<a href="Search/DetailsInfo?name=' + GM.ArrayGeographicFeature[i].GetName() + '">Детально</a>' +
                 '</div>';
             break;
         }
@@ -19,3 +19,30 @@
 
     this.infoWindow.open(this.map);
 };
+
+
+$("#Output").on("click", function () {
+    GM.Clear();
+
+    if (isNaN($("#InputYear1").val())) {
+        return;
+    }
+
+    let FormMap = {
+        Year: $("#InputYear1").val(),
+        Level: $("#formControlRange").val(),
+        Exeptions: $("#InputExeptions1").val()
+    }
+
+    $.ajax({
+        url: "Visualization/MapView",
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        data: ({
+            map: FormMap
+        }),
+        beforeSend: Download,
+        success: Show
+    });
+});
