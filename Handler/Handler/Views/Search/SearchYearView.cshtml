@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "SearchYear";
+}
+@model List<Handler.Models.Search.ResponseSearch>
+
+@foreach (var itemOb in Model) {
+    <div class="row">
+        <p class="text-center col-12">@itemOb.Type @itemOb.Name</p>
+        <p class="text-center col-12">@itemOb.Information</p>
+
+        @if (itemOb.ReferenceIn.Count != 0)
+        {
+            <p class="text-center col-12">Об'єднує</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Назва</th>
+                        <th scope="col">Тип</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in itemOb.ReferenceIn)
+                    {
+
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Type</td>
+                            <td><a class="navbar-brand" asp-area="" asp-controller="Search" asp-action="DetailsInfo" asp-route-name="@item.Name">Детальніше</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        @if (itemOb.ReferenceOut.Count != 0)
+        {
+            <p class="text-center col-12">Входить в</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Назва</th>
+                        <th scope="col">Тип</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in itemOb.ReferenceOut)
+                    {
+
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Type</td>
+                            <td><a asp-area="" asp-controller="Search" asp-action="DetailsInfo" asp-route-name="@item.Name">Детальніше</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        @if (itemOb.ListRecords.Count != 0)
+        {
+            <p class="text-center col-12">@itemOb.ListRecords[0].Year</p>
+
+            @foreach (var item in itemOb.ListRecords)
+            {
+                <p class="text-center col-12">@item.Information</p>
+            }
+
+        }
+        else
+        {
+            <p class="text-center col-12">У вказаний рік нічого не знайдено</p>
+        }
+
+    </div>
+
+}

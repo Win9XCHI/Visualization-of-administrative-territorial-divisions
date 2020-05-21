@@ -10,23 +10,33 @@ namespace Handler.Models.Repositories {
 
         private List<ResponseSearch> GetGeneralInformation(string Name)
         {
-            return SELECT<ResponseSearch>("Local_point.Name, Midle.id, Midle.Type",
+            List< ResponseSearch> Ob = SELECT<ResponseSearch>("Local_point.Name, Midle.id, Midle.Type",
                 "Local_point JOIN Midle ON (Midle.id = Local_point.Midle_id) WHERE Local_point.Name LIKE '%" + Name + "%' OR Local_point.Name = '%" + Name + "' OR Local_point.Name = '" + Name + "%' OR Local_point.Name = '" + Name + "' " +
                 "UNION SELECT Region.Name, Midle.id, Midle.Type FROM Region JOIN Midle ON(Midle.id = Region.Midle_id) WHERE Region.Name = '%" + Name + "%'  OR Region.Name = '%" + Name + "' OR Region.Name = '" + Name + "%' OR Region.Name = '" + Name + "' " +
                 "UNION SELECT Administrative_unit.Name, Midle.id, Midle.Type FROM Administrative_unit JOIN Midle ON(Midle.id = Administrative_unit.Midle_id) WHERE Administrative_unit.Name = '%" + Name + "%' OR Administrative_unit.Name = '%" + Name + "' OR Administrative_unit.Name = '" + Name + "%' OR Administrative_unit.Name = '" + Name + "' " +
                 "UNION SELECT Country.Name, Midle.id, Midle.Type FROM Country JOIN Midle ON(Midle.id = Country.Midle_id) WHERE Country.Name = '%" + Name + "%' OR Country.Name = '%" + Name + "' OR Country.Name = '" + Name + "%' OR Country.Name = '" + Name + "'");
 
+            if (Ob.Count != 0)
+            {
+                Ob[0].Information = SELECT<ResponseSearch>(Ob[0].Type + ".Information", Ob[0].Type, Ob[0].Type + ".Name LIKE '%" + Name + "%' OR " + Ob[0].Type + ".Name = '%" + Name + "' OR " + Ob[0].Type + ".Name = '" + Name + "%' OR " + Ob[0].Type + ".Name = '" + Name + "' ")[0].Information;
+            }
+
+            return Ob; 
+
         }
 
         private List<Reference> GetReference(string Type, string TypeTwo, int id, string tableMidle = "")
         {
+            /*  Type + " JOIN " + TypeTwo + " ON " + TypeTwo + "." + Type + "_id = " + Type + ".id JOIN Midle ON (Midle.id =  " + TypeTwo + ".Midle_id)",
+                                       ;*/
+
             if (tableMidle.Length == 0)
             {
-                return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID",
-                                    Type + " JOIN " + TypeTwo + " ON " + TypeTwo + "." + Type + "_id = " + Type + ".id JOIN Midle ON (Midle.id =  " + TypeTwo + ".Midle_id)",
+                return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID, Midle.Type",
+                                    Type + " JOIN " + TypeTwo + " ON " + Type + "." + TypeTwo + "_id = " + TypeTwo + ".id JOIN Midle ON (Midle.id =  " + TypeTwo + ".Midle_id)",
                                     "Midle.id = " + id);
             }
-            return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID",
+            return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID, Midle.Type",
                                 Type + " JOIN " + tableMidle + " ON " + tableMidle + "." + Type + "_id = " + Type + ".id " +
                                 "JOIN " + TypeTwo + " ON " + TypeTwo + ".id = " + tableMidle + "." + TypeTwo + "_id JOIN Midle ON(Midle.id = " + TypeTwo + ".Midle_id)",
                                 "Midle.id = " + id);
@@ -51,27 +61,27 @@ namespace Handler.Models.Repositories {
                 {
                     case "Local_point":
                         {
-                            GeneralInfo[i].ReferenceOut = GetReference("Region", "Local_point", GeneralInfo[0].id, "Region_LP");
+                            GeneralInfo[i].ReferenceOut = GetReference("Region", "Local_point", GeneralInfo[i].id, "Region_LP");
                             break;
                         }
                     case "Region":
                         {
-                            GeneralInfo[i].ReferenceIn = GetReference("Local_point", "Region", GeneralInfo[0].id, "Region_LP");
+                            GeneralInfo[i].ReferenceIn = GetReference("Local_point", "Region", GeneralInfo[i].id);
 
-                            GeneralInfo[i].ReferenceOut = GetReference("Administrative_unit", "Region", GeneralInfo[0].id, "Region_AU");
+                            GeneralInfo[i].ReferenceOut = GetReference("Administrative_unit", "Region", GeneralInfo[i].id, "Region_AU");
                             break;
                         }
                     case "Administrative unit":
                         {
-                            GeneralInfo[i].ReferenceIn = GetReference("Region", "Administrative_unit", GeneralInfo[0].id, "Region_AU");
+                            GeneralInfo[i].ReferenceIn = GetReference("Region", "Administrative_unit", GeneralInfo[i].id, "Region_AU");
 
-                            GeneralInfo[i].ReferenceOut = GetReference("Country", "Administrative_unit", GeneralInfo[0].id);
+                            GeneralInfo[i].ReferenceOut = GetReference("Country", "Administrative_unit", GeneralInfo[i].id);
 
                             break;
                         }
                     case "Country":
                         {
-                            GeneralInfo[i].ReferenceIn = GetReference("Administrative_unit", "Country", GeneralInfo[0].id);
+                            GeneralInfo[i].ReferenceIn = GetReference("Administrative_unit", "Country", GeneralInfo[i].id);
                             break;
                         }
                 }
