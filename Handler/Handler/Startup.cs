@@ -42,30 +42,11 @@ namespace Handler {
 
             app.UseAuthorization();
 
-            /*app.Map("/index", Index);
-    app.Map("/about", About);
-    */
-
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-
-        /*private static void Index(IApplicationBuilder app)
-{
-    app.Run(async context =>
-    {
-        await context.Response.WriteAsync("Index");
-    });
-}
-private static void About(IApplicationBuilder app)
-{
-    app.Run(async context =>
-    {
-        await context.Response.WriteAsync("About");
-    });
-}*/
     }
 }
