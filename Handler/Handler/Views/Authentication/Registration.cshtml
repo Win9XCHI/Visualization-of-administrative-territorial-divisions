@@ -3,22 +3,64 @@
 }
 @model Handler.Models.Authentication.Register
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="text-center">
+        <div class="form-group">
+            <img class="mb-4" src="images/user.png" alt="" width="72" height="72">
+        </div>
+        <div class="form-group">
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        </div>
 
-    <div>
-        <form asp-action="NewUser" asp-controller="Authentication" method="POST">
-            <div>
-                <input asp-for="PIB" type="text" maxlength="100" size="100" value="Enter PIB">
-                <input asp-for="Phone" type="text" maxlength="20" size="40" value="Enter phone">
-                <input asp-for="Login" type="text" maxlength="100" size="100" value="Enter email">
-                <input asp-for="Password" type="text" maxlength="100" size="40" value="Enter password">
-                <input asp-for="Birthday" type="text" maxlength="100" size="100" value="Enter Birthday">
-                <input asp-for="DiplomaF" type="file" class="form-control" />
-                <input type="submit" value="Output">
+        <form class="needs-validation" novalidate asp-action="NewUser" asp-controller="Authentication" method="POST">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom01">Enter PIB</label>
+                    <input asp-for="PIB" type="text" maxlength="100" class="form-control" id="validationCustom01" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom02">Phone</label>
+                    <input asp-for="Phone" type="text" maxlength="20" class="form-control" id="validationCustom02" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustomUsername">Email</label>
+                    <input asp-for="Login" type="email" maxlength="100" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                        Please choose a email.
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">Password</label>
+                    <input asp-for="Password" type="password" maxlength="100" class="form-control" id="validationCustom03" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid city.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom04">Birthday</label>
+                    <input asp-for="Birthday" type="date" maxlength="100" class="form-control" id="validationCustom04" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid city.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3 custom-file">
 
-</div>
+                    <input asp-for="DiplomaF" type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <div class="invalid-feedback">
+                        Please provide a valid zip.
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Submit form</button>
+        </form>
+
+    </div>
