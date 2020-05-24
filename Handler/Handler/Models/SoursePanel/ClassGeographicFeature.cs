@@ -6,7 +6,7 @@ namespace Handler.Models.SoursePanel
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        public string Year { get; set; }
+        public List<string> Year { get; set; }
         public string Information { get; set; }
         public List<string> Reference { get; set; }
         public List<string> Coordinates { get; set; }
@@ -14,7 +14,7 @@ namespace Handler.Models.SoursePanel
 
         public bool CheckCompleteness()
         {
-            if (Name.Length == 0 || Type.Length == 0 || Year.Length == 0 || (Coordinates.Count == 0 && Text.Length == 0))
+            if (Name.Length == 0 || Type.Length == 0 || Year.Count == 0 || (Coordinates.Count == 0 && Text.Length == 0))
             {
                 return false;
             }
@@ -26,7 +26,7 @@ namespace Handler.Models.SoursePanel
         {
             Name = words[0];
             Type = words[1];
-            Year = words[2];
+            Year = new List<string>(words[2].Split("-"));
             Information = words[3];
             Reference = new List<string>(words[4].Split(";"));
         }

@@ -65,13 +65,13 @@ namespace Handler.Models.Repositories {
         public void DeleteSourse(int id)
         {
             List<int> M_IDs = SELECT<int>("Local_point.Midle_id",
-                "Local_point JOIN Sourse_LocalPoint ON (Local_point.idLP = Sourse_LocalPoint.Local_point_idLP) " +
-"JOIN Sourse ON(Sourse.idSourse = Sourse_LocalPoint.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
-"UNION SELECT Region.Midle_id FROM Region JOIN Sourse_Region ON(Region.idR = Sourse_Region.Region_idR) " +
-"JOIN Sourse ON(Sourse.idSourse = Sourse_Region.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
-"UNION SELECT Administrative_unit.Midle_id FROM Administrative_unit JOIN Sourse_Administrative_unit ON(Administrative_unit.idAU = Sourse_Administrative_unit.Administrative_unit_idAU) " +
-"JOIN Sourse ON(Sourse.idSourse = Sourse_Administrative_unit.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
-"UNION SELECT Country.Midle_id FROM Country JOIN Sourse_Country ON(Country.idC = Sourse_Country.Country_idC) " +
+                "Local_point JOIN Sourse_LocalPoint ON (Local_point.id = Sourse_LocalPoint.Local_point_id) " +
+"JOIN Sourse ON(Sourse.idSourse = Sourse_LocalPoint.Sourse_idSourse) WHERE Sourse.idSourse = " + id +
+"UNION SELECT Region.Midle_id FROM Region JOIN Sourse_Region ON(Region.id = Sourse_Region.Region_id) " +
+"JOIN Sourse ON(Sourse.idSourse = Sourse_Region.Sourse_idSourse) WHERE Sourse.idSourse = " + id +
+"UNION SELECT Administrative_unit.Midle_id FROM Administrative_unit JOIN Sourse_Administrative_unit ON(Administrative_unit.id = Sourse_Administrative_unit.Administrative_unit_id) " +
+"JOIN Sourse ON(Sourse.idSourse = Sourse_Administrative_unit.Sourse_idSourse) WHERE Sourse.idSourse = " + id +
+"UNION SELECT Country.Midle_id FROM Country JOIN Sourse_Country ON(Country.id = Sourse_Country.Country_id) " +
 "JOIN Sourse ON(Sourse.idSourse = Sourse_Country.Sourse_idSourse)",
                 "Sourse.idSourse = " + id); 
 
@@ -130,49 +130,18 @@ namespace Handler.Models.Repositories {
                 "Country.Name = '" + Name + "'")[0];
         }
 
-        public void NewObject(ClassGeographicFeature GFeature, int number, int id)
+        private void OldDetailsInformation(int Year, ClassGeographicFeature GFeature, int Cid, int id)
         {
-            INSERT("Midle", new ArrayList { "Type" }, new ArrayList { GFeature.Type });
-            int Midle_id = SELECT<int>("MAX(id)", "Midle")[0];
-
-            INSERT(GFeature.Type, new ArrayList { "Name", "Information", "Midle_id" },
-                new ArrayList { GFeature.Name, GFeature.Information, Midle_id });
-
-            INSERT("Sourse_" + GFeature.Type, new ArrayList { "Sourse_idSourse", GFeature.Type + "_id" },
-                new ArrayList { id, SELECT<int>("id", GFeature.Type, "Midle_id = " + Midle_id)[0] });
-
-            INSERT("DetailsInformation", new ArrayList { "Year", "Midle_id" }, new ArrayList { GFeature.Year, Midle_id });
-
-            int idDI = SELECT<int>("id", "DetailsInformation", "DetailsInformation.Year = '" + GFeature.Year + "' AND DetailsInformation.Midle_id = " + Midle_id)[0];
-
-            if (GFeature.Coordinates.Count != 0)
-            {
-                InsertCoordinates(GFeature.Coordinates, idDI);
-            }
-            else
-            {
-                InsertText(GFeature.Text, idDI, id);
-            }
-
-            InsertReference(GFeature, SELECT<int>("id", GFeature.Type, "Midle_id = " + Midle_id)[0], number, id);
-        }
-        public void OldObject(ClassGeographicFeature GFeature, ReturnOb CheckName, int number, int id)
-        {
-            GFeature.Type = CheckName.Type;
-
-            INSERT("Sourse_" + GFeature.Type, new ArrayList { "Sourse_idSourse", GFeature.Type + "_id" },
-                new ArrayList { id, CheckName.id });
-
             List<int> idDI = SELECT<int>("id", "DetailsInformation",
-                "DetailsInformation.Year = '" + GFeature.Year + "' AND DetailsInformation.Midle_id = " + CheckName.id);
+                "DetailsInformation.Year = '" + Year + "' AND DetailsInformation.Midle_id = " + Cid);
 
             if (idDI.Count == 0)
             {
                 INSERT("DetailsInformation", new ArrayList { "Year", "Midle_id" },
-                    new ArrayList { GFeature.Year, CheckName.id });
+                    new ArrayList { Year, Cid });
 
                 idDI = SELECT<int>("id", "DetailsInformation",
-                    "DetailsInformation.Year = '" + GFeature.Year + "' AND DetailsInformation.Midle_id = " + CheckName.id);
+                    "DetailsInformation.Year = '" + Year + "' AND DetailsInformation.Midle_id = " + Cid);
 
                 if (GFeature.Coordinates.Count != 0)
                 {
@@ -189,7 +158,7 @@ namespace Handler.Models.Repositories {
                 {
                     List<int> CheckCoo = SELECT<int>("Coordinates.Counter",
                     "Coordinates JOIN DetailsInformation ON (DetailsInformation.id = Coordinates.DetailsInformation_id)",
-                    "DetailsInformation.Year = '" + GFeature.Year + "' AND DetailsInformation.Midle_id = " + CheckName.id);
+                    "DetailsInformation.Year = '" + Year + "' AND DetailsInformation.Midle_id = " + Cid);
 
                     if (CheckCoo.Count == 0)
                     {
@@ -200,13 +169,74 @@ namespace Handler.Models.Repositories {
                 {
                     List<int> CheckText = SELECT<int>("id",
                     "Part JOIN DetailsInformation ON (DetailsInformation.id = Part.DetailsInformation_id)",
-                    "DetailsInformation.Year = '" + GFeature.Year + "' AND DetailsInformation.Midle_id = " + CheckName.id + " AND Part.Information = '" + GFeature.Text + "'");
+                    "DetailsInformation.Year = '" + Year + "' AND DetailsInformation.Midle_id = " + Cid + " AND Part.Information = '" + GFeature.Text + "'");
 
                     if (CheckText.Count == 0)
                     {
                         InsertText(GFeature.Text, idDI[0], id);
                     }
                 }
+            }
+        }
+
+        private void NewDetailsInformation(int Year, ClassGeographicFeature GFeature, int Midle_id, int id)
+        {
+            INSERT("DetailsInformation", new ArrayList { "Year", "Midle_id" }, new ArrayList { Year, Midle_id });
+
+            int idDI = SELECT<int>("id", "DetailsInformation", "DetailsInformation.Year = '" + Year + "' AND DetailsInformation.Midle_id = " + Midle_id)[0];
+
+            if (GFeature.Coordinates.Count != 0)
+            {
+                InsertCoordinates(GFeature.Coordinates, idDI);
+            }
+            else
+            {
+                InsertText(GFeature.Text, idDI, id);
+            }
+        }
+
+        public void NewObject(ClassGeographicFeature GFeature, int number, int id)
+        {
+            INSERT("Midle", new ArrayList { "Type" }, new ArrayList { GFeature.Type });
+            int Midle_id = SELECT<int>("MAX(id)", "Midle")[0];
+
+            INSERT(GFeature.Type, new ArrayList { "Name", "Information", "Midle_id" },
+                new ArrayList { GFeature.Name, GFeature.Information, Midle_id });
+
+            INSERT("Sourse_" + GFeature.Type, new ArrayList { "Sourse_idSourse", GFeature.Type + "_id" },
+                new ArrayList { id, SELECT<int>("id", GFeature.Type, "Midle_id = " + Midle_id)[0] });
+
+            if (GFeature.Year.Count == 2)
+            {
+                for (int i = Int32.Parse(GFeature.Year[0]); i < Int32.Parse(GFeature.Year[1]); i++)
+                {
+                    NewDetailsInformation(i, GFeature, Midle_id, id);
+                }
+            }
+            else
+            {
+                NewDetailsInformation(Int32.Parse(GFeature.Year[0]), GFeature, Midle_id, id);
+            }
+
+            InsertReference(GFeature, SELECT<int>("id", GFeature.Type, "Midle_id = " + Midle_id)[0], number, id);
+        }
+        public void OldObject(ClassGeographicFeature GFeature, ReturnOb CheckName, int number, int id)
+        {
+            GFeature.Type = CheckName.Type;
+
+            INSERT("Sourse_" + GFeature.Type, new ArrayList { "Sourse_idSourse", GFeature.Type + "_id" },
+                new ArrayList { id, CheckName.id });
+
+            if (GFeature.Year.Count == 2)
+            {
+                for (int i = Int32.Parse(GFeature.Year[0]); i < Int32.Parse(GFeature.Year[1]); i++)
+                {
+                    OldDetailsInformation(i, GFeature, CheckName.id, id);
+                }
+            }
+            else
+            {
+                OldDetailsInformation(Int32.Parse(GFeature.Year[0]), GFeature, CheckName.id, id);
             }
 
             InsertReference(GFeature, CheckName.id, number, id);
@@ -223,62 +253,72 @@ namespace Handler.Models.Repositories {
             {
                 for (int i = 0; i < GFeature.Reference.Count; i++)
                 {
-                    List<ReturnOb> Reference = SELECT<ReturnOb>("Local_point.Name, Midle.id, Midle.Type",
+                    List<ReturnOb> Reference = SELECT<ReturnOb>("Local_point.Name, Local_point.id, Midle.Type",
                     "Local_point JOIN Midle ON (Midle.id = Local_point.Midle_id) WHERE Local_point.Name = '" + GFeature.Reference[i] + "' " +
-    "UNION SELECT Region.Name, Midle.id, Midle.Type FROM Region JOIN Midle ON(Midle.id = Region.Midle_id) WHERE Region.Name = '" + GFeature.Reference[i] + "' " +
-    "UNION SELECT Administrative_unit.Name, Midle.id, Midle.Type FROM Administrative_unit JOIN Midle ON(Midle.id = Administrative_unit.Midle_id) WHERE Administrative_unit.Name = '" + GFeature.Reference[i] + "' " +
-    "UNION SELECT Country.Name, Midle.id, Midle.Type FROM Country JOIN Midle ON(Midle.id = Country.Midle_id)",
+    "UNION SELECT Region.Name, Region.id, Midle.Type FROM Region JOIN Midle ON(Midle.id = Region.Midle_id) WHERE Region.Name = '" + GFeature.Reference[i] + "' " +
+    "UNION SELECT Administrative_unit.Name, Administrative_unit.id, Midle.Type FROM Administrative_unit JOIN Midle ON(Midle.id = Administrative_unit.Midle_id) WHERE Administrative_unit.Name = '" + GFeature.Reference[i] + "' " +
+    "UNION SELECT Country.Name, Country.id, Midle.Type FROM Country JOIN Midle ON(Midle.id = Country.Midle_id)",
                     "Country.Name = '" + GFeature.Reference[i] + "'");
 
                     if (Reference.Count > 0)
                     {
                         if (GFeature.Type == "Administrative_unit" && Reference[0].Type == "Region")
                         {
-                            List<int> id = SELECT<int>("id", "Region_AU", "Administrative_unit_idAU = " + idOB + " AND Region_idR = " + Reference[0].id);
+                            List<int> id = SELECT<int>("id", "Region_AU", "Administrative_unit_id = " + idOB + " AND Region_id = " + Reference[0].id);
 
                             if (id.Count == 0)
                             {
-                                INSERT("Region_AU", new ArrayList { "Administrative_unit_idAU", "Region_idR" }, new ArrayList { idOB, Reference[0].id });
+                                INSERT("Region_AU", new ArrayList { "Administrative_unit_id", "Region_id" }, new ArrayList { idOB, Reference[0].id });
                             }
                         }
 
                         if (GFeature.Type == "Region" && Reference[0].Type == "Administrative_unit")
                         {
-                            List<int> id = SELECT<int>("id", "Region_AU", "Region_idR = " + idOB + " AND Administrative_unit_idAU = " + Reference[0].id);
+                            List<int> id = SELECT<int>("id", "Region_AU", "Region_id = " + idOB + " AND Administrative_unit_id = " + Reference[0].id);
 
                             if (id.Count == 0)
                             {
-                                INSERT("Region_AU", new ArrayList { "Region_idR", "Administrative_unit_idAU" }, new ArrayList { idOB, Reference[0].id });
+                                INSERT("Region_AU", new ArrayList { "Region_id", "Administrative_unit_id" }, new ArrayList { idOB, Reference[0].id });
                             }
                         }
 
                         if (GFeature.Type == "Region" && Reference[0].Type == "Local_point")
                         {
-                            List<int> id = SELECT<int>("id", "Region_LP", "Region_idR = " + idOB + " AND Local_point_idLP = " + Reference[0].id);
+                            List<int> id = SELECT<int>("id", "Local_point", "Region_id = " + idOB + " AND id = " + Reference[0].id);
 
                             if (id.Count == 0)
                             {
-                                INSERT("Region_LP", new ArrayList { "Region_idR", "Local_point_idLP" }, new ArrayList { idOB, Reference[0].id });
+                                UPDATE("Local_point", "Region_id = " + idOB, "id = " + Reference[0].id);
                             }
                         }
 
                         if (GFeature.Type == "Local_point" && Reference[0].Type == "Region")
                         {
-                            List<int> id = SELECT<int>("id", "Region_LP", "Local_point_idLP = " + idOB + " AND Region_idR = " + Reference[0].id);
+                            List<int> id = SELECT<int>("id", "Local_point", "Region_id = " + Reference[0].id + " AND id = " + idOB);
 
                             if (id.Count == 0)
                             {
-                                INSERT("Region_LP", new ArrayList { "Local_point_idLP", "Region_idR" }, new ArrayList { idOB, Reference[0].id });
+                                UPDATE("Local_point", "Region_id = " + Reference[0].id, "id = " + idOB);
                             }
                         }
 
                         if (GFeature.Type == "Administrative_unit" && Reference[0].Type == "Country")
                         {
-                            List<int> id = SELECT<int>("id", "Administrative_unit", "id = " + idOB + " AND Country_idC = " + Reference[0].id);
+                            List<int> id = SELECT<int>("id", "Administrative_unit", "id = " + idOB + " AND Country_id = " + Reference[0].id);
 
                             if (id.Count == 0)
                             {
-                                UPDATE("Administrative_unit", "Country_idC = " + Reference[0].id, "id = " + idOB);
+                                UPDATE("Administrative_unit", "Country_id = " + Reference[0].id, "id = " + idOB);
+                            }
+                        }
+
+                        if (GFeature.Type == "Country" && Reference[0].Type == "Administrative_unit")
+                        {
+                            List<int> id = SELECT<int>("id", "Administrative_unit", "id = " + Reference[0].id + " AND Country_id = " + idOB);
+
+                            if (id.Count == 0)
+                            {
+                                UPDATE("Administrative_unit", "Country_id = " + idOB, "id = " + Reference[0].id);
                             }
                         }
                     }
@@ -293,7 +333,7 @@ namespace Handler.Models.Repositories {
         {
             for (int i = 0; i < Coordinates.Count; i++)
             {
-                INSERT("Coordinates", new ArrayList { "СoordinatesPoint", "Counter", "DetailsInformation_id" }, new ArrayList { "geography::STGeomFromText('LINESTRING(" + Coordinates[i] + ")', 4326)", i + 1, idDI });
+                INSERT("Coordinates", new ArrayList { "СoordinatesPoint", "Counter", "DetailsInformation_id" }, new ArrayList { "geography::Point(" + Coordinates[i] + ", 4326)", i + 1, idDI });
             }
         }
     }

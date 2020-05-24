@@ -62,13 +62,13 @@ namespace Handler.Models.Repositories {
         public void DeleteUser(int code)
         {
             List<int> M_IDs = SELECT<int>("Local_point.Midle_id",
-                "Local_point JOIN Sourse_LocalPoint ON (Local_point.idLP = Sourse_LocalPoint.Local_point_idLP) " +
-"JOIN Sourse ON(Sourse.idSourse = Sourse_LocalPoint.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
-"UNION SELECT Region.Midle_id FROM Region JOIN Sourse_Region ON(Region.idR = Sourse_Region.Region_idR) " +
-"JOIN Sourse ON(Sourse.idSourse = Sourse_Region.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
-"UNION SELECT Administrative_unit.Midle_id FROM Administrative_unit JOIN Sourse_Administrative_unit ON(Administrative_unit.idAU = Sourse_Administrative_unit.Administrative_unit_idAU) " +
-"JOIN Sourse ON(Sourse.idSourse = Sourse_Administrative_unit.Sourse_idSourse) WHERE Sourse.idSourse = 2 " +
-"UNION SELECT Country.Midle_id FROM Country JOIN Sourse_Country ON(Country.idC = Sourse_Country.Country_idC) " +
+                "Local_point JOIN Sourse_LocalPoint ON (Local_point.id = Sourse_LocalPoint.Local_point_id) " +
+"JOIN Sourse ON(Sourse.idSourse = Sourse_LocalPoint.Sourse_idSourse) WHERE Sourse.idSourse = " + code +
+"UNION SELECT Region.Midle_id FROM Region JOIN Sourse_Region ON(Region.id = Sourse_Region.Region_id) " +
+"JOIN Sourse ON(Sourse.idSourse = Sourse_Region.Sourse_idSourse) WHERE Sourse.idSourse = " + code +
+"UNION SELECT Administrative_unit.Midle_id FROM Administrative_unit JOIN Sourse_Administrative_unit ON(Administrative_unit.id = Sourse_Administrative_unit.Administrative_unit_id) " +
+"JOIN Sourse ON(Sourse.idSourse = Sourse_Administrative_unit.Sourse_idSourse) WHERE Sourse.idSourse = " + code +
+"UNION SELECT Country.Midle_id FROM Country JOIN Sourse_Country ON(Country.id = Sourse_Country.Country_id) " +
 "JOIN Sourse ON(Sourse.idSourse = Sourse_Country.Sourse_idSourse)",
                 "Sourse.Input_Code = " + code);
 
