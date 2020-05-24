@@ -28,17 +28,29 @@ namespace Handler.Controllers
         }
 
         [HttpPost]
-        public ActionResult Check(LogIn User)
+        public IActionResult Check(LogIn User)
         {
             try
             {
                 User = repo.GetUser(User);
-                Response.Cookies.Append("code", User.Code.ToString());
+
+                if (User.Rights == "No")
+                {
+                    throw new System.ArgumentOutOfRangeException();
+                }
+
+                Response.Cookies.Append("Rights", User.Rights.ToString());
             }
             catch (System.ArgumentOutOfRangeException)
             {
-                return RedirectToAction("Index");
+                return Json("false");
             }
+            return Json("true");
+        }
+
+        [HttpGet]
+        public ActionResult Redirect()
+        {
             return RedirectToAction("Index", "SoursePanel");
         }
 

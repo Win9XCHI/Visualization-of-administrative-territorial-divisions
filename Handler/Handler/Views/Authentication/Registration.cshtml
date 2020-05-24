@@ -3,64 +3,84 @@
 }
 @model Handler.Models.Authentication.Register
 
-    <div class="text-center">
-        <div class="form-group">
-            <img class="mb-4" src="images/user.png" alt="" width="72" height="72">
-        </div>
-        <div class="form-group">
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        </div>
-
-        <form class="needs-validation" novalidate asp-action="NewUser" asp-controller="Authentication" method="POST">
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <label for="validationCustom01">Enter PIB</label>
-                    <input asp-for="PIB" type="text" maxlength="100" class="form-control" id="validationCustom01" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="validationCustom02">Phone</label>
-                    <input asp-for="Phone" type="text" maxlength="20" class="form-control" id="validationCustom02" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="validationCustomUsername">Email</label>
-                    <input asp-for="Login" type="email" maxlength="100" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                    <div class="invalid-feedback">
-                        Please choose a email.
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="validationCustom03">Password</label>
-                    <input asp-for="Password" type="password" maxlength="100" class="form-control" id="validationCustom03" required>
-                    <div class="invalid-feedback">
-                        Please provide a valid city.
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="validationCustom04">Birthday</label>
-                    <input asp-for="Birthday" type="date" maxlength="100" class="form-control" id="validationCustom04" required>
-                    <div class="invalid-feedback">
-                        Please provide a valid city.
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3 custom-file">
-
-                    <input asp-for="DiplomaF" type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                    <div class="invalid-feedback">
-                        Please provide a valid zip.
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn btn-primary" type="submit">Submit form</button>
-        </form>
-
+<div class="text-center">
+    <div class="form-group">
+        <img class="mb-4" src="images/user.png" alt="" width="72" height="72">
     </div>
+    <div class="form-group">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    </div>
+
+    <form class="needs-validation" novalidate asp-action="NewUser" asp-controller="Authentication" method="POST">
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="validationCustom01">Enter PIB</label>
+                <input asp-for="PIB" type="text" maxlength="100" class="form-control" id="validationCustom01" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="validationCustom02">Phone</label>
+                <input asp-for="Phone" type="text" maxlength="20" class="form-control" id="validationCustom02" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="validationCustomUsername">Email</label>
+                <input asp-for="Login" type="email" maxlength="100" class="form-control" id="validationCustomLogin" aria-describedby="inputGroupPrepend" required>
+                <div class="invalid-feedback">
+                    Please choose a email.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="validationCustom03">Password</label>
+                <input asp-for="Password" type="password" maxlength="100" class="form-control" id="validationCustom03" required>
+                <div class="invalid-feedback">
+                    Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="validationCustom04">Birthday</label>
+                <input asp-for="Birthday" type="date" maxlength="100" class="form-control" id="validationCustom04" required>
+                <div class="invalid-feedback">
+                    Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-3 mb-3 custom-file">
+
+                <input asp-for="DiplomaF" type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+                <div class="invalid-feedback">
+                    Please provide a valid zip.
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="Submit">Submit form</button>
+    </form>
+
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Please wait</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="spinner-border" id="download" role="status">
+                    <span class="sr-only">Загрузка...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="~/js/Registration.js" asp-append-version="true"></script>

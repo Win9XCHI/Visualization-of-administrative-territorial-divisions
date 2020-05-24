@@ -1,16 +1,15 @@
-﻿$("#Log").on("click", function () {
-    //$('#download2').hide();
-    $('#myModal').modal('show');
-    //$('#download').hide();
-    //$('#download2').show();
+﻿
+$("#Log").on("click", function () {
 
-
-    /*let Form = {
+    let Form = {
+        Code: 0,
+        PIB: "",
+        Rights: "",
         Login: $("#inputLogin").val(),
         Password: $("#inputPassword").val()
     }
 
-    $.ajax({
+    $.ajax({ 
         url: "Authentication/Check",
         type: "POST",
         dataType: "json",
@@ -20,7 +19,7 @@
         }),
         beforeSend: Download,
         success: Show
-    });*/
+    });
 });
 
 function Download() {
@@ -32,20 +31,34 @@ function Show(data) {
 
     if (data == "true") {
 
-        checkmark.classList.add(className);
-
+        $('#s_alert').show();
         setTimeout(function () {
-            checkmark.classList.remove(className);
-        }, 1700);
+            let form = document.createElement('form');
+            form.action = 'Authentication/Redirect';
+            form.method = 'GET';
+            form.innerHTML = '';
+            document.body.append(form);
+            form.submit();
+        }, 2000);
 
     } else {
-
+        $('#e_alert').show();
+        setTimeout(function () {
+            $('#e_alert').hide();
+            $('#myModal').modal('hide');
+            $('#download').show();
+        }, 2000);
     }
-
-    setTimeout(sayHi, 1000);
 }
 
-function sayHi() {
-    alert('Привет');
+function Route() {
+    $.ajax({
+        url: "Authentication/Redirect",
+        type: "GET",
+        dataType: "json",
+        cache: false
+    });
 }
 
+$('#s_alert').hide();
+$('#e_alert').hide();
