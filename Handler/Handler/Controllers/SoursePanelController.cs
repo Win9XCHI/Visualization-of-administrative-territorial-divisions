@@ -26,7 +26,6 @@ namespace Handler.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -41,7 +40,7 @@ namespace Handler.Controllers
         {
             await Task.Run(() => repo.DeleteSourse(id));
 
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpGet]
@@ -51,13 +50,13 @@ namespace Handler.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SaveEdit(Sourse ObS)
+        public async Task<IActionResult> SaveEdit(Sourse ObS)
         {
             await Task.Run(() => repo.UpdateSourse(ObS));
-            return RedirectToAction("Index");
+            return Json("true");
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult AddSourse()
         {
             return View();

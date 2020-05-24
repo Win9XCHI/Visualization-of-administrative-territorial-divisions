@@ -1,26 +1,6 @@
 ﻿
-$("#Log").on("click", function () {
-
-    let Form = {
-        Code: 0,
-        PIB: "",
-        Rights: "",
-        Login: $("#inputLogin").val(),
-        Password: $("#inputPassword").val()
-    }
-
-    $.ajax({ 
-        url: "Authentication/Check",
-        type: "POST",
-        dataType: "json",
-        cache: false,
-        data: ({
-            User: Form
-        }),
-        beforeSend: Download,
-        success: Show
-    });
-});
+$('#s_alert').hide();
+$('#e_alert').hide();
 
 function Download() {
     $('#myModal').modal('show');
@@ -34,7 +14,7 @@ function Show(data) {
         $('#s_alert').show();
         setTimeout(function () {
             let form = document.createElement('form');
-            form.action = 'Authentication/Redirect';
+            form.action = 'SoursePanel/Index';
             form.method = 'GET';
             form.innerHTML = '';
             document.body.append(form);
@@ -50,6 +30,3 @@ function Show(data) {
         }, 2000);
     }
 }
-
-$('#s_alert').hide();
-$('#e_alert').hide();

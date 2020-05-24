@@ -3,44 +3,80 @@
 }
 @model Handler.Models.SoursePanel.Sourse
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        <a asp-controller="SoursePanel" asp-action="AddSourse">Add sourse</a>
-        <a asp-controller="SoursePanel" asp-action="Index">Search sourse</a>
-
-        <form asp-action="SaveEdit" asp-controller="SoursePanel" method="POST">
-            <table class="table">
-                <tr>
-                    <th>Название</th>
-                    <th>Автор</th>
-                    <th>Тип</th>
-                    <th>Год создания</th>
-                    <th>Года актуальности</th>
-                    <th></th>
-                </tr>
-
-                <tr>
-                    <td>
-                        <input asp-for="Name" type="text" maxlength="200" size="30" value="@Model.Name">
-                    </td>
-                    <td>
-                        <input asp-for="Author" type="text" maxlength="50" size="30" value="@Model.Author">
-                        
-                    </td>
-                    <td>
-                        <input asp-for="Type" type="text" maxlength="100" size="30" value="@Model.Type">
-                    </td>
-                    <td>
-                        <input asp-for="Year" type="text" maxlength="4" size="4" value="@Model.Year">
-                    </td>
-                    <td>
-                        <input asp-for="YearRelevance" type="text" maxlength="4" size="4" value="@Model.YearRelevance">
-                    </td>
-                    <td>
-                        <input type="submit" value="Save">
-                    </td>
-                </tr>
-            </table>
-        </form>
+<div class="text-center">
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" asp-controller="SoursePanel" asp-action="index">Знайти джерела</a>
+            </li>
+            <li class="nav-item User">
+                <a class="nav-link" asp-controller="SoursePanel" asp-action="AddSourse">Додати джерела</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link Admin" asp-controller="UserPanel" asp-action="SearchUsers">Знайти користувачів</a>
+            </li>
+        </ul>
     </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Назва</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Рік створення</th>
+                <th scope="col">Роки актуальності</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input id="inputName" type="text" value="@Model.Name">
+                </td>
+                <td>
+                    <input id="inputAuthor" type="text" value="@Model.Author">
+                </td>
+                <td>
+                    <input id="inputType" type="text" value="@Model.Type">
+                </td>
+                <td>
+                    <input id="inputYear" type="text" maxlength="5" size="5" value="@Model.Year">
+                </td>
+                <td>
+                    <input id="inputYearRelevance" type="text" maxlength="5" size="5" value="@Model.YearRelevance">
+                </td>
+                <td>
+                    <input type="submit" id="Save" value="Save">
+                </td>
+            </tr>
+    </table>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Please wait</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Загрузка...</span>
+                </div>
+                <div class="alert alert-danger" id="e_alert" role="alert">
+                    No
+                </div>
+
+                <div class="alert alert-success" id="s_alert" role="alert">
+                    Yes
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="~/js/ControlePanel.js" asp-append-version="true"></script>
+<script src="~/js/ControlePanelFunctions.js" asp-append-version="true"></script>
+<script src="~/js/ControlePanelEvents.js" asp-append-version="true"></script>

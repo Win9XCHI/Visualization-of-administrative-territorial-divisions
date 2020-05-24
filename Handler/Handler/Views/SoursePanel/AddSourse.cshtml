@@ -1,24 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "Edit sourse";
+    ViewData["Title"] = "Add sourse";
 }
 @model Handler.Models.SoursePanel.Sourse
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <a asp-controller="SoursePanel" asp-action="Index">Search sourse</a>
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="SoursePanel" asp-action="index">Знайти джерела</a>
+            </li>
+            <li class="nav-item User">
+                <a class="nav-link active" asp-controller="SoursePanel" asp-action="AddSourse">Додати джерела</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link Admin" asp-controller="UserPanel" asp-action="SearchUsers">Знайти користувачів</a>
+            </li>
+        </ul>
+    </div>
 
     <div>
         <form asp-action="NewSourseAsync" asp-controller="SoursePanel" method="POST">
-            <div>
-                <input asp-for="Name" type="text" maxlength="100" size="40" value="Enter name">
-                <input asp-for="Type" type="text" maxlength="100" size="40" value="Enter type">
-                <input asp-for="Author" type="text" maxlength="100" size="40" value="Enter author">
-                <input asp-for="Year" type="text" maxlength="4" size="4" value="Enter year">
-                <input asp-for="Language" type="text" maxlength="100" size="40" value="Enter language">
-                <input asp-for="DOCF" type="file" class="form-control" />
-                <input type="submit" value="Upload">
+            <div class="form-group">
+                <label for="InputName">Enter name</label>
+                <input asp-for="Name" type="text" class="form-control" id="InputName" aria-describedby="NameHelp">
+                <small id="NameHelp" class="form-text text-muted"></small>
             </div>
+            <div class="form-group">
+                <label for="InputAuthor">Author</label>
+                <input asp-for="Author" type="text" class="form-control" id="InputAuthor">
+            </div>
+            <div class="form-group">
+                <label for="InputType">Type</label>
+                <input asp-for="Type" type="text" class="form-control" id="InputType">
+            </div>
+            <div class="form-group">
+                <label for="InputYear">Year</label>
+                <input asp-for="Year" type="text" maxlength="5" class="form-control" id="InputYear">
+            </div>
+            <div class="form-group">
+                <label for="customFile">Завантажити джерело</label>
+                <input asp-for="DOCF" type="file" class="custom-file-input" id="customFile">
+            </div>
+
+            <button type="submit" id="AddSourse" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="~/js/ControlePanel.js" asp-append-version="true"></script>
+<script src="~/js/ControlePanelEvents.js" asp-append-version="true"></script>

@@ -34,11 +34,6 @@ namespace Handler.Controllers
             {
                 User = repo.GetUser(User);
 
-                if (User.Rights == "No")
-                {
-                    throw new System.ArgumentOutOfRangeException();
-                }
-
                 Response.Cookies.Append("Rights", User.Rights.ToString());
             }
             catch (System.ArgumentOutOfRangeException)

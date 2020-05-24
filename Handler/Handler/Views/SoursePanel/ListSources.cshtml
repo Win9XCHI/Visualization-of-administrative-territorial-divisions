@@ -3,45 +3,67 @@
 }
 @model List<Handler.Models.SoursePanel.Sourse>
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        <a asp-controller="SoursePanel" asp-action="AddSourse">Add</a>
+<div class="text-center">
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" asp-controller="SoursePanel" asp-action="index">Знайти джерела</a>
+            </li>
+            <li class="nav-item User">
+                <a class="nav-link" asp-controller="SoursePanel" asp-action="AddSourse">Додати джерела</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link Admin" asp-controller="UserPanel" asp-action="SearchUsers">Знайти користувачів</a>
+            </li>
+        </ul>
+    </div>
 
-        <table class="table">
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th>Название</th>
-                <th>Автор</th>
-                <th>Тип</th>
-                <th>Год создания</th>
-                <th>Года актуальности</th>
-                <th></th>
+                <th scope="col">Назва</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Рік створення</th>
+                <th scope="col">Роки актуальності</th>
             </tr>
-
-            <!--Добавить сортировки по нажатию на колонку-->
+        </thead>
+        <tbody>
 
             @foreach (var item in Model)
             {
-        <tr>
-            <td>@item.Name</td>
-            <td>
-                @item.Author
-            </td>
-            <td>
-                @item.Type
-            </td>
-            <td>
-                @item.Year
-            </td>
-            <td>
-                @item.YearRelevance
-            </td>
-            <td>
-                <a asp-controller="SoursePanel" asp-action="EditSourse" asp-route-id="@item.id" asp-route-name="@item.Name" asp-route-author="@item.Author" asp-route-type="@item.Type" asp-route-year1="@item.Year" asp-route-year2="@item.YearRelevance">Изменить</a> |
-                <a asp-controller="SoursePanel" asp-action="DeleteSourse" asp-route-id="@item.id">Удалить</a>
-            </td>
-        </tr>
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.Type
+                    </td>
+                    <td>
+                        @item.Year
+                    </td>
+                    <td>
+                        @item.YearRelevance
+                    </td>
+                    <td>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item Admin">
+                                <a class="nav-link" asp-controller="SoursePanel" asp-action="EditSourse" asp-route-id="@item.id" asp-route-name="@item.Name" asp-route-author="@item.Author" asp-route-type="@item.Type" asp-route-year1="@item.Year" asp-route-year2="@item.YearRelevance">Редагувати</a>
+                            </li>
+                            <li class="nav-item Admin">
+                                <a class="nav-link" asp-controller="SoursePanel" asp-action="DeleteSourse" asp-route-id="@item.id">Видалити</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
             }
-        </table>
+        </tbody>
+    </table>
 
-    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="~/js/ControlePanel.js" asp-append-version="true"></script>
