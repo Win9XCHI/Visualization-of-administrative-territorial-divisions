@@ -48,10 +48,10 @@ namespace Handler.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SaveEdit(User U)
+        public async Task<IActionResult> SaveEdit(User U)
         {
             await Task.Run(() => repo.UpdateUser(U));
-            return RedirectToAction("SearchUsers");
+            return Json("UserPanel/SearchUsers");
         }
     }
 }

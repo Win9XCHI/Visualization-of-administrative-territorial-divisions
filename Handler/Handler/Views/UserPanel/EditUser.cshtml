@@ -4,42 +4,81 @@
 @model Handler.Models.UserPanel.User
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <a asp-controller="UserPanel" asp-action="SearchUsers">Search sourse</a>
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="SoursePanel" asp-action="index">Знайти джерела</a>
+            </li>
+            <li class="nav-item User">
+                <a class="nav-link" asp-controller="SoursePanel" asp-action="AddSourse">Додати джерела</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link Admin" asp-controller="UserPanel" asp-action="SearchUsers">Знайти користувачів</a>
+            </li>
+        </ul>
+    </div>
 
-    <form asp-action="SaveEdit" asp-controller="UserPanel" method="POST">
-        <table class="table">
-            <tr>
-                <th>ФИО</th>
-                <th>Логин</th>
-                <th>Телефон</th>
-                <th>День рождения</th>
-                <th>Права</th>
-                <th></th>
-            </tr>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ФИО</th>
+                    <th scope="col">Логин</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">День рождения</th>
+                    <th scope="col">Права</th>
+                </tr>
+            </thead>
+            <tbody>
 
-            <tr>
-                <td>
-                    <input asp-for="PIB" type="text" maxlength="100" size="30" value="@Model.PIB">
-                </td>
-                <td>
-                    <input asp-for="Login" type="text" maxlength="50" size="30" value="@Model.Login">
-
-                </td>
-                <td>
-                    <input asp-for="Phone" type="text" maxlength="100" size="30" value="@Model.Phone">
-                </td>
-                <td>
-                    <input asp-for="Birthday" type="text" maxlength="10" size="10" value="@Model.Birthday">
-                </td>
-                <td>
-                    <input asp-for="Rights" type="text" maxlength="20" size="10" value="@Model.Rights">
-                </td>
-                <td>
-                    <input type="submit" value="Save">
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        <input asp-for="PIB" id="inputPIB" type="text" value="@Model.PIB">
+                    </td>
+                    <td>
+                        <input asp-for="Login" id="inputLogin" type="text" value="@Model.Login">
+                    </td>
+                    <td>
+                        <input asp-for="Phone" id="inputPhone" type="text" value="@Model.Phone">
+                    </td>
+                    <td>
+                        <input asp-for="Birthday" id="inputBirthday" type="date" value="@Model.Birthday">
+                    </td>
+                    <td>
+                        <input asp-for="Rights" id="inputRights" type="text" value="@Model.Rights">
+                    </td>
+                    <td>
+                        <input type="submit" id="SaveUser" value="Save">
+                    </td>
+                </tr>
+            </tbody>
         </table>
-    </form>
 </div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Please wait</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Загрузка...</span>
+                </div>
+                <div class="alert alert-danger" id="e_alert" role="alert">
+                    No
+                </div>
+
+                <div class="alert alert-success" id="s_alert" role="alert">
+                    Yes
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="~/js/ControlePanel.js" asp-append-version="true"></script>
+<script src="~/js/ControlePanelFunctions.js" asp-append-version="true"></script>
+<script src="~/js/ControlePanelEvents.js" asp-append-version="true"></script>

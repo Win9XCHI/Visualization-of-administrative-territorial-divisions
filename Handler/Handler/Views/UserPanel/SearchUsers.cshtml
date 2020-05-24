@@ -4,21 +4,51 @@
 @model Handler.Models.UserPanel.User
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
-    <!--Добавить отношение ИЛИ-->
     <div>
-        <form asp-action="ListUsers" asp-controller="UserPanel" method="POST">
-            <div>
-                <input asp-for="PIB" type="text" maxlength="100" size="40" value="Enter PIB">
-                <input asp-for="Phone" type="text" maxlength="20" size="20" value="Enter phone">
-                <input asp-for="Rights" type="text" maxlength="30" size="30" value="Enter year rights">
-                <input asp-for="Login" type="text" maxlength="100" size="40" value="Enter year login">
-                <input asp-for="Birthday" type="text" maxlength="10" size="10" value="Enter Birthday">
-                <input type="submit" value="Output">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="SoursePanel" asp-action="index">Знайти джерела</a>
+            </li>
+            <li class="nav-item User">
+                <a class="nav-link" asp-controller="SoursePanel" asp-action="AddSourse">Додати джерела</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active Admin" asp-controller="UserPanel" asp-action="SearchUsers">Знайти користувачів</a>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+
+        <form asp-controller="ListUsers" asp-action="UserPanel" method="POST">
+            <div class="form-group">
+                <label for="InputPIB">PIB</label>
+                <input asp-for="PIB" type="text" class="form-control" id="InputPIB" aria-describedby="PIBHelp">
+                <small id="PIBHelp" class="form-text text-muted"></small>
             </div>
+            <div class="form-group">
+                <label for="InputPhone">Phone</label>
+                <input asp-for="Phone" type="text" class="form-control" id="InputPhone">
+            </div>
+            <div class="form-group">
+                <label for="InputRights">Rights</label>
+                <input asp-for="Rights" type="text" maxlength="5" class="form-control" id="InputRights">
+            </div>
+            <div class="form-group">
+                <label for="InputLogin">Login</label>
+                <input asp-for="Login" type="text" maxlength="5" class="form-control" id="InputLogin">
+            </div>
+            <div class="form-group">
+                <label for="InputBirthday">Birthday</label>
+                <input asp-for="Birthday" type="date" class="form-control" id="InputBirthday">
+            </div>
+            <button type="submit" id="OutputUsers" class="btn btn-primary">Submit</button>
         </form>
     </div>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="~/js/ControlePanel.js" asp-append-version="true"></script>

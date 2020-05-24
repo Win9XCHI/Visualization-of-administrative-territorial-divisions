@@ -9,12 +9,12 @@ function Download() {
 function Show(data) {
     $('#download').hide();
 
-    if (data == "true") {
+    if (data != "") {
 
         $('#s_alert').show();
         setTimeout(function () {
             let form = document.createElement('form');
-            form.action = 'SoursePanel/Index';
+            form.action = data;
             form.method = 'GET';
             form.innerHTML = '';
             document.body.append(form);

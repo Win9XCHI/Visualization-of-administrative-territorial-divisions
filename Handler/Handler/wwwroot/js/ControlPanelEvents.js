@@ -26,3 +26,27 @@ $("#Save").on("click", function () {
         success: Show
     });
 });
+
+$("#SaveUser").on("click", function () {
+    $('#myModal').modal('show');
+
+    let Form = {
+        PIB: $("#inputPIB").val(),
+        Login: $("#inputLogin").val(),
+        Phone: $("#inputPhone").val(),
+        Birthday: $("#inputBirthday").val(),
+        Rights: $("#inputRights").val()
+    }
+
+    $.ajax({
+        url: "UserPanel/SaveEdit",
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        data: ({
+            U: Form
+        }),
+        beforeSend: Download,
+        success: Show
+    });
+});

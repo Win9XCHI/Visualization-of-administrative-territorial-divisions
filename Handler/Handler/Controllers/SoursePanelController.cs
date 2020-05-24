@@ -53,7 +53,7 @@ namespace Handler.Controllers
         public async Task<IActionResult> SaveEdit(Sourse ObS)
         {
             await Task.Run(() => repo.UpdateSourse(ObS));
-            return Json("true");
+            return Json("'SoursePanel/Index'");
         }
 
         [HttpGet]
