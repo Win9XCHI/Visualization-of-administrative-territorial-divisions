@@ -95,8 +95,9 @@ namespace Handler.Models.Repositories {
 
         public int AddNewSourse(Sourse ObS)
         {
-            INSERT("Sourse", new ArrayList { "Name", "Type", "YearCreate", "Author", "DOC" },
-                new ArrayList { "'" + ObS.Name + "'", "'" + ObS.Type + "'", "'" + ObS.Year + "'", "'" + ObS.Author + "'", ObS.DOC });
+            ObS.YearRelevance = "All";
+            INSERT("Sourse", new ArrayList { "Name", "Type", "YearCreate", "YearRelevance", "Author", "DOC" },
+                new ArrayList { "'" + ObS.Name + "'", "'" + ObS.Type + "'", "'" + ObS.Year + "'", "'" + ObS.YearRelevance + "'", "'" + ObS.Author + "'", ObS.DOC });
 
             return SELECT<int>("idSourse", "Sourse", "Name = " + ObS.Name)[0];
         }

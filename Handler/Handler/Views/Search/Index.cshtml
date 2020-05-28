@@ -4,26 +4,32 @@
 @model Handler.Models.Search.FormSearch
 
     <form asp-action="SearchView" asp-controller="Search" method="GET">
-        <div class="form-group">
-            <label for="InputName">Name</label>
+        <p class="text-center">Форма для пошуку</p>
+        <div class="form-group mb-5 mx-auto text-center">
+            <img class="mb-4" src="~/images/search.png" alt="" width="72" height="72">
+        </div>
+        <div class="form-group mb-4">
+            <label for="InputName">Назва об'єкта або фрагмент</label>
             <input asp-for="Name" type="text" class="form-control" id="InputName" aria-describedby="nameHelp" value="Запоріжжя">
-            <small id="nameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
-        <div class="form-group">
-            <label for="InputYear">Year</label>
+        <div class="form-group mb-4">
+            <label for="InputYear">Рік</label>
             <input asp-for="Year" type="text" class="form-control" id="InputYear" maxlength="5" value="1594">
+            <small id="InputYear" class="form-text text-muted">Від -9999 до 2020</small>
         </div>
 
-        @foreach (var item in Model.Options)
-        {
-            <div class="form-check">
-                <input asp-for="SelectedOption" class="form-check-input" type="radio" name="SelectedOption" id="Radios @item.Id" value="@item.Id">
-                <label class="form-check-label" for="Radios @item.Id">
-                    @item.OptionsName
-                </label>
-            </div>
-        }
+        <div class="mb-5">
+            @foreach (var item in Model.Options)
+            {
+                <div class="form-check">
+                    <input asp-for="SelectedOption" class="form-check-input" type="radio" name="SelectedOption" id="Radios @item.Id" value="@item.Id">
+                    <label class="form-check-label" for="Radios @item.Id">
+                        @item.OptionsName
+                    </label>
+                </div>
+            }
+        </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Почати пошук</button>
     </form>

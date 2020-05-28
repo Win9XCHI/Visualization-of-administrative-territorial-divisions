@@ -7,12 +7,14 @@
     </div>
 
     <div class="text-center col-12 col-lg-3">
-        <div class="form-group">
-            <label for="InputYear1">Year</label>
+        <p class="text-center">Форма для пошуку</p>
+        <div class="form-group mb-5">
+            <label for="InputYear1">Рік</label>
             <input type="text" class="form-control" id="InputYear1" aria-describedby="yearHelp" maxlength="5" value="1594">
+            <small id="InputYear1" class="form-text text-muted">Від -9999 до 2020</small>
         </div>
-        <div class="form-group">
-            <label for="formControlRange">Level</label>
+        <div class="form-group mb-5">
+            <label for="formControlRange">Рівень деталізації</label>
             <input type="range" class="form-control-range" id="formControlRange" min="0" max="4" value="2">
 
             <datalist id="formControlRange">
@@ -23,14 +25,14 @@
                 <option value="4"></option>
             </datalist>
             <span id="ex6CurrentSliderValLabel">Current Slider Value: <span id="ex6SliderVal"></span></span>
-            <small id="ControlRangeHelp" class="form-text text-muted">0 - all, 1 - local points, 2 - regions, 3 - administrative unit, 4 - countries</small>
+            <small id="ControlRangeHelp" class="form-text text-muted">0 - Усі, 1 - Локальні точки, 2 - Регіони, 3 - Адміністративні одиниці, 4 - Країни</small>
         </div>
-        <div class="form-group">
-            <label for="InputExeptions1">Exeptions</label>
+        <div class="form-group mb-5">
+            <label for="InputExeptions1">Виключення</label>
             <input type="text" class="form-control" id="InputExeptions1">
-            <small id="ExeptionsHelp" class="form-text text-muted">Name objects through ";"</small>
+            <small id="ExeptionsHelp" class="form-text text-muted">Назви об'єктів через ";"</small>
         </div>
-        <button type="submit" class="btn btn-primary" id="Output">Output</button>
+        <button type="submit" class="btn btn-primary" id="Output">Знайти</button>
 
     </div>
 </div>
@@ -39,18 +41,18 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Please wait</h5>
+                <h5 class="modal-title">Зачейкайте будь-ласка</h5>
             </div>
             <div class="modal-body text-center">
                 <div class="spinner-border" role="status">
-                    <span class="sr-only">Загрузка...</span>
+                    <span class="sr-only">Завантаження...</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYnxQlUA6bBNupyd0bsT253iPnpWckpSg&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYnxQlUA6bBNupyd0bsT253iPnpWckpSg&callback=initMap&language=uk&region=UA"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="~/js/ClassGeographicFeature.js" asp-append-version="true"></script>
 <script src="~/js/VisualizationEvents.js" asp-append-version="true"></script>

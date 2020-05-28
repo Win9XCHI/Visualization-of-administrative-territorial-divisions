@@ -5,12 +5,37 @@
 
 @foreach (var itemOb in Model) {
     <div class="row">
-        <p class="text-center col-12">@itemOb.Type @itemOb.Name</p>
-        <p class="text-center col-12">@itemOb.Information</p>
+
+        @{
+            string RenderType(string name)
+            {
+                string Type = "Локальна точка";
+
+                if (itemOb.Type == "Region")
+                {
+                    Type = "Регіон";
+                }
+
+                @if (itemOb.Type == "Administrative_unit")
+                {
+                    Type = "Адміністративна одиниця";
+                }
+
+                @if (itemOb.Type == "Country")
+                {
+                    Type = "Країна";
+                }
+                return Type;
+            }
+
+        }
+
+        <h2 class="text-center col-12">@RenderType(itemOb.Type) @itemOb.Name</h2>
+        <p class="text-center col-12 mb-5">Загальна інформація про об'єкт: @itemOb.Information</p>
 
         @if (itemOb.ReferenceIn.Count != 0)
         {
-            <p class="text-center col-12">Об'єднує</p>
+            <p class="text-center col-12">Об'єднує у собі об'єкти:</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -25,17 +50,17 @@
 
                         <tr>
                             <td>@item.Name</td>
-                            <td>@item.Type</td>
-                            <td><a class="navbar-brand" asp-area="" asp-controller="Search" asp-action="DetailsInfo" asp-route-name="@item.Name">Детальніше</a></td>
+                            <td>@RenderType(@item.Type)</td>
+                            <td><a class="nav-item" asp-area="" asp-controller="Search" asp-action="DetailsInfo" asp-route-name="@item.Name">Детальніше</a></td>
                         </tr>
                     }
                 </tbody>
             </table>
         }
 
-        @if (itemOb.ReferenceOut.Count != 0)
+        @if (itemOb.ReferenceIn != null && itemOb.ReferenceOut.Count != 0)
         {
-            <p class="text-center col-12">Входить в</p>
+            <p class="text-center col-12">Входить в об'єкти:</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -50,21 +75,22 @@
 
                         <tr>
                             <td>@item.Name</td>
-                            <td>@item.Type</td>
-                            <td><a asp-area="" asp-controller="Search" asp-action="DetailsInfo" asp-route-name="@item.Name">Детальніше</a></td>
+                            <td>@RenderType(@item.Type)</td>
+                            <td><a class="nav-item" asp-area="" asp-controller="Search" asp-action="DetailsInfo" asp-route-name="@item.Name">Детальніше</a></td>
                         </tr>
                     }
                 </tbody>
             </table>
         }
 
-        @if (itemOb.ListRecords.Count != 0)
+    <div class="border border-danger mx-auto">
+        @if (itemOb.ReferenceOut != null && itemOb.ListRecords.Count != 0)
         {
-            <p class="text-center col-12">@itemOb.ListRecords[0].Year</p>
+            <p class="text-center col-12">Вказаний рік: @itemOb.ListRecords[0].Year</p>
 
             @foreach (var item in itemOb.ListRecords)
             {
-                <p class="text-center col-12">@item.Information</p>
+                <p class="text-center col-12">Відбулося: @item.Information</p>
             }
 
         }
@@ -72,6 +98,7 @@
         {
             <p class="text-center col-12">У вказаний рік нічого не знайдено</p>
         }
+    </div>
 
     </div>
 

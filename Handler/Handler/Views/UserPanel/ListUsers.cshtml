@@ -3,75 +3,80 @@
 }
 @model List<Handler.Models.UserPanel.User>
 
-<div class="text-center">
-    <div>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="SoursePanel" asp-action="index">Знайти джерела</a>
-            </li>
-            <li class="nav-item User">
-                <a class="nav-link" asp-controller="SoursePanel" asp-action="AddSourse">Додати джерела</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active Admin" asp-controller="UserPanel" asp-action="SearchUsers">Знайти користувачів</a>
-            </li>
-        </ul>
-    </div>
+    <div class="text-center">
+        <div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="SoursePanel" asp-action="index">Знайти джерела</a>
+                </li>
+                <li class="nav-item User">
+                    <a class="nav-link" asp-controller="SoursePanel" asp-action="AddSourse">Додати джерела</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active Admin" asp-controller="UserPanel" asp-action="SearchUsers">Знайти користувачів</a>
+                </li>
+            </ul>
+        </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Диплом</th>
-                <th scope="col">ФИО</th>
-                <th scope="col">Логин</th>
-                <th scope="col">Телефон</th>
-                <th scope="col">День рождения</th>
-                <th scope="col">Права</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
+        <p class="text-center">Список знайдених користувачів</p>
+        <div class="form-group mb-5 mx-auto text-center">
+            <img class="mb-4" src="~/images/people.png" alt="" width="72" height="72">
+        </div>
 
-            @foreach (var item in Model)
-            {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>
-                        @if (item.Diploma != null)
-                        {
-                            <img style='width:80px; height:60px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Diploma))" />
-                        }
-                    </td>
-                    <td>
-                        @item.PIB
-                    </td>
-                    <td>
-                        @item.Login
-                    </td>
-                    <td>
-                        @item.Phone
-                    </td>
-                    <td>
-                        @item.Birthday
-                    </td>
-                    <td>
-                        @item.Rights
-                    </td>
-                    <td>
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item Admin">
-                                <a class="nav-link" asp-controller="UserPanel" asp-action="EditUser" asp-route-code="@item.Code" asp-route-pib="@item.PIB" asp-route-login="@item.Login" asp-route-phone="@item.Phone" asp-route-birthday="@item.Birthday" asp-route-rights="@item.Rights">Редагувати</a>
-                            </li>
-                            <li class="nav-item Admin">
-                                <a class="nav-link" asp-controller="UserPanel" asp-action="DeleteUser" asp-route-code="@item.Code">Видалити</a>
-                            </li>
-                        </ul>
-                    </td>
+                    <th scope="col">Диплом</th>
+                    <th scope="col">ПІБ</th>
+                    <th scope="col">Логін</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">День народження</th>
+                    <th scope="col">Права</th>
+                    <th scope="col"></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
 
-</div>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (item.Diploma != null)
+                            {
+                                <img style='width:80px; height:60px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Diploma))" />
+                            }
+                        </td>
+                        <td>
+                            @item.PIB
+                        </td>
+                        <td>
+                            @item.Login
+                        </td>
+                        <td>
+                            @item.Phone
+                        </td>
+                        <td>
+                            @item.Birthday
+                        </td>
+                        <td>
+                            @item.Rights
+                        </td>
+                        <td>
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item Admin">
+                                    <a class="nav-link" asp-controller="UserPanel" asp-action="EditUser" asp-route-code="@item.Code" asp-route-pib="@item.PIB" asp-route-login="@item.Login" asp-route-phone="@item.Phone" asp-route-birthday="@item.Birthday" asp-route-rights="@item.Rights">Редагувати</a>
+                                </li>
+                                <li class="nav-item Admin">
+                                    <a class="nav-link" asp-controller="UserPanel" asp-action="DeleteUser" asp-route-code="@item.Code">Видалити</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

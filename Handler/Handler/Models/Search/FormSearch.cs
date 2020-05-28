@@ -9,9 +9,9 @@ namespace Handler.Models.Search
         public string Name { get; set; }
         public IEnumerable<ModelOptions> Options { set; get; } = new List<ModelOptions>
         {
-            new ModelOptions {Id = 1, OptionsName = "Year"},
-            new ModelOptions {Id = 2, OptionsName = "Sourse"},
-            new ModelOptions {Id = 3, OptionsName = "Chrono"}
+            new ModelOptions {Id = 1, OptionsName = "Пошук за роком"},
+            new ModelOptions {Id = 2, OptionsName = "Пошук джерел вказаного об'єкта"},
+            new ModelOptions {Id = 3, OptionsName = "Хронологічна інформація про об'єкт"}
         };
         public int SelectedOption { set; get; }
     }

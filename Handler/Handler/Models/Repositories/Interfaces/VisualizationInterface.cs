@@ -7,8 +7,6 @@ namespace Handler.Models.Repositories.Interfaces
     public interface IVisualizationRepository
     {
         List<InfoMaps> GetInformation(string Name, string Year, string[] ListExceptions);
-
-        //List<SqlGeography> GetCoordinates(string Name, string Year, string[] ListExceptions);
     }
 }
 

@@ -32,9 +32,18 @@ namespace Handler.Models.Repositories {
 
             if (tableMidle.Length == 0)
             {
-                return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID, Midle.Type",
-                                    Type + " JOIN " + TypeTwo + " ON " + Type + "." + TypeTwo + "_id = " + TypeTwo + ".id JOIN Midle ON (Midle.id =  " + TypeTwo + ".Midle_id)",
-                                    "Midle.id = " + id);
+                if (Type == "Region" && TypeTwo == "Local_point")
+                {
+                    return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID, Midle.Type",
+                                        Type + " JOIN " + TypeTwo + " ON " + Type + ".id = " + TypeTwo + "." + Type + "_id JOIN Midle ON (Midle.id =  " + TypeTwo + ".Midle_id)",
+                                        "Midle.id = " + id);
+                }
+                else
+                {
+                    return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID, Midle.Type",
+                                        Type + " JOIN " + TypeTwo + " ON " + Type + "." + TypeTwo + "_id = " + TypeTwo + ".id JOIN Midle ON (Midle.id =  " + TypeTwo + ".Midle_id)",
+                                        "Midle.id = " + id);
+                }
             }
             return SELECT<Reference>(Type + ".Name, " + Type + ".id AS ID, Midle.Type",
                                 Type + " JOIN " + tableMidle + " ON " + tableMidle + "." + Type + "_id = " + Type + ".id " +
@@ -61,7 +70,7 @@ namespace Handler.Models.Repositories {
                 {
                     case "Local_point":
                         {
-                            GeneralInfo[i].ReferenceOut = GetReference("Region", "Local_point", GeneralInfo[i].id, "Region_LP");
+                            GeneralInfo[i].ReferenceOut = GetReference("Region", "Local_point", GeneralInfo[i].id);
                             break;
                         }
                     case "Region":

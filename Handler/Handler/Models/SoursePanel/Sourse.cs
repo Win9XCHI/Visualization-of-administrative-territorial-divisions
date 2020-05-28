@@ -11,7 +11,6 @@ namespace Handler.Models.SoursePanel
         public int Year { get; set; }
         public string YearRelevance { get; set; }
         public string Type { get; set; }
-        public string Language { get; set; }
         public byte[] DOC { get; set; }
         public IFormFile DOCF { get; set; }
 

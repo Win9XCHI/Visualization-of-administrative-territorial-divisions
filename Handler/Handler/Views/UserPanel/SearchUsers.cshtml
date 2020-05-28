@@ -20,29 +20,34 @@
 
     <div>
 
-        <form asp-controller="ListUsers" asp-action="UserPanel" method="POST">
+        <form asp-controller="UserPanel" asp-action="ListUsers" method="POST">
+            <p class="text-center">Форма для пошуку користувачів</p>
+            <div class="form-group mb-5 mx-auto text-center">
+                <img class="mb-4" src="~/images/Paneluser.png" alt="" width="72" height="72">
+            </div>
+
             <div class="form-group">
-                <label for="InputPIB">PIB</label>
+                <label for="InputPIB">Прізвище Ім'я Побатькові</label>
                 <input asp-for="PIB" type="text" class="form-control" id="InputPIB" aria-describedby="PIBHelp">
                 <small id="PIBHelp" class="form-text text-muted"></small>
             </div>
             <div class="form-group">
-                <label for="InputPhone">Phone</label>
+                <label for="InputPhone">Номер телефону</label>
                 <input asp-for="Phone" type="text" class="form-control" id="InputPhone">
             </div>
             <div class="form-group">
-                <label for="InputRights">Rights</label>
+                <label for="InputRights">Права</label>
                 <input asp-for="Rights" type="text" maxlength="5" class="form-control" id="InputRights">
             </div>
             <div class="form-group">
-                <label for="InputLogin">Login</label>
+                <label for="InputLogin">Логін</label>
                 <input asp-for="Login" type="text" maxlength="5" class="form-control" id="InputLogin">
             </div>
-            <div class="form-group">
-                <label for="InputBirthday">Birthday</label>
+            <div class="form-group mb-5">
+                <label for="InputBirthday">День народження</label>
                 <input asp-for="Birthday" type="date" class="form-control" id="InputBirthday">
             </div>
-            <button type="submit" id="OutputUsers" class="btn btn-primary">Submit</button>
+            <button type="submit" id="OutputUsers" class="btn btn-primary">Знайти</button>
         </form>
     </div>
 

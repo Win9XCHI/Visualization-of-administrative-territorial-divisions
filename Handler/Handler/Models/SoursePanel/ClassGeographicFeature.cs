@@ -22,7 +22,7 @@ namespace Handler.Models.SoursePanel
             return true;
         }
 
-        public void SetGeneral(string[] words)
+        private void SetGeneral(string[] words)
         {
             Name = words[0];
             Type = words[1];

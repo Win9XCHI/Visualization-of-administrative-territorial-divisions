@@ -68,7 +68,7 @@ namespace Handler.Controllers
             SourseAnalysis Analysis = new SourseAnalysis(repo, ObS);
             await Task.Run(() => Analysis.Start());
 
-            return View();
+            return RedirectToAction("Index");
         }
 
     }

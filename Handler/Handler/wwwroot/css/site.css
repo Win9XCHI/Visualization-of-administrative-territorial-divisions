@@ -70,8 +70,8 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-.view { /*~/images/1655р.САНСОН.jpg*/
-    background-image: url('https://1.bp.blogspot.com/-jVRT1Oc6DDM/XUO1iYNcT5I/AAAAAAAAOqw/iHwpi77Ikkki8dG85TjNSyOSLtOPJvBgwCLcBGAs/s1600/1655%2B%25D1%2580.%2B%25D0%25A1%25D0%2590%25D0%259D%25D0%25A1%25D0%259E%25D0%259D.jpg');
+.view { 
+    background-image: url('../images/3.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -91,8 +91,10 @@ h5 {
     width: 80px;
 }
 
-.white-text {
-    color: #fff;
+.color {
+    color: #fff9fe;
+    padding: 5px;
+    filter: blur(0.5px);
 }
 
 .btn-outline-white {
@@ -109,4 +111,17 @@ h5 {
     padding-bottom: 56.25%;
     position: relative;
     height: 0;
+}
+
+label.checkbox {
+    cursor: pointer;
+    user-select: none;
+}
+
+    label.checkbox [type=checkbox] {
+        display: none;
+    }
+
+.checkbox_svg {
+    width: 40px;
 }

@@ -19,28 +19,31 @@
         </div>
 
         <form asp-controller="SoursePanel" asp-action="ListSources" method="POST">
-            <div class="form-group">
-                <label for="InputName">Enter name</label>
-                <input asp-for="Name" type="text" class="form-control" id="InputName" aria-describedby="NameHelp">
-                <small id="NameHelp" class="form-text text-muted"></small>
+            <p class="text-center">Форма для пошуку</p>
+            <div class="form-group mb-5 mx-auto text-center">
+                <img class="mb-4" src="~/images/book.png" alt="" width="72" height="72">
             </div>
             <div class="form-group">
-                <label for="InputAuthor">Author</label>
+                <label for="InputName">Назва</label>
+                <input asp-for="Name" type="text" class="form-control" id="InputName" aria-describedby="NameHelp">
+            </div>
+            <div class="form-group">
+                <label for="InputAuthor">Автор</label>
                 <input asp-for="Author" type="text" class="form-control" id="InputAuthor">
             </div>
             <div class="form-group">
-                <label for="InputYear">Year</label>
+                <label for="InputYear">Рік створення</label>
                 <input asp-for="Year" type="text" maxlength="5" class="form-control" id="InputYear">
             </div>
             <div class="form-group">
-                <label for="InputYearRelevance">YearRelevance</label>
+                <label for="InputYearRelevance">Рік актуальності</label>
                 <input asp-for="YearRelevance" type="text" maxlength="5" class="form-control" id="InputYearRelevance">
             </div>
-            <div class="form-group">
-                <label for="InputType">Type</label>
+            <div class="form-group mb-4">
+                <label for="InputType">Тип</label>
                 <input asp-for="Type" type="text" class="form-control" id="InputType">
             </div>
-            <button type="submit" id="OutputSourse" class="btn btn-primary">Submit</button>
+            <button type="submit" id="OutputSourse" class="btn btn-primary">Знайти</button>
         </form>
 
     </div>
@@ -49,11 +52,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Please wait</h5>
+                    <h5 class="modal-title">Зачекайте будь-ласка</h5>
                 </div>
                 <div class="modal-body text-center">
                     <div class="spinner-border" role="status">
-                        <span class="sr-only">Загрузка...</span>
+                        <span class="sr-only">Завантаження...</span>
                     </div>
                 </div>
             </div>

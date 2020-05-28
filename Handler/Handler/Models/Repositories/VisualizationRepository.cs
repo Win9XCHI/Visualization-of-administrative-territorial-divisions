@@ -59,16 +59,5 @@ namespace Handler.Models.Repositories {
 
             return ReturnList;
         }
-
-        /*public List<SqlGeography> GetCoordinates(string Name, string Year, string[] ListExceptions)
-        {
-
-            return SELECT<SqlGeography>("ROW_NUMBER() OVER(PARTITION BY " + Name + ".Name ORDER BY Сoordinates.Counter) AS NumberRecord, " +
-                            "Сoordinates.СoordinatesPoint",
-                            Name + " JOIN Midle ON " + Name + ".Midle_id = Midle.id JOIN DetailsInformation ON DetailsInformation.Midle_id = Midle.id " +
-                            "JOIN Сoordinates ON(Сoordinates.DetailsInformation_id = DetailsInformation.id)",
-                            "DetailsInformation.Year = " + Year + Exceptions(Name, ListExceptions));
-
-        }*/
     }
 }

@@ -19,30 +19,36 @@
     </div>
 
     <div>
-        <form asp-action="NewSourseAsync" asp-controller="SoursePanel" method="POST">
+        <form asp-controller="SoursePanel" asp-action="NewSourseAsync" method="POST">
+            <p class="text-center">Форма додавання джерела</p>
+            <div class="form-group mb-5 mx-auto text-center">
+                <img class="mb-4" src="~/images/Addbook.png" alt="" width="72" height="72">
+            </div>
+
             <div class="form-group">
-                <label for="InputName">Enter name</label>
+                <label for="InputName">Назва</label>
                 <input asp-for="Name" type="text" class="form-control" id="InputName" aria-describedby="NameHelp">
                 <small id="NameHelp" class="form-text text-muted"></small>
             </div>
             <div class="form-group">
-                <label for="InputAuthor">Author</label>
+                <label for="InputAuthor">Автор</label>
                 <input asp-for="Author" type="text" class="form-control" id="InputAuthor">
             </div>
             <div class="form-group">
-                <label for="InputType">Type</label>
+                <label for="InputType">Тип</label>
                 <input asp-for="Type" type="text" class="form-control" id="InputType">
             </div>
             <div class="form-group">
-                <label for="InputYear">Year</label>
+                <label for="InputYear">Рік</label>
                 <input asp-for="Year" type="text" maxlength="5" class="form-control" id="InputYear">
             </div>
-            <div class="form-group">
-                <label for="customFile">Завантажити джерело</label>
+            <div class="custom-file mb-5">
+
                 <input asp-for="DOCF" type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Завантажити джерело</label>
             </div>
 
-            <button type="submit" id="AddSourse" class="btn btn-primary">Submit</button>
+            <button type="submit" id="AddSourse" class="btn btn-primary">Додати</button>
         </form>
     </div>
 </div>
@@ -51,4 +57,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="~/js/ControlePanel.js" asp-append-version="true"></script>
-<script src="~/js/ControlePanelEvents.js" asp-append-version="true"></script>
